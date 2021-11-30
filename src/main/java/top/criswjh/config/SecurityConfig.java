@@ -1,8 +1,11 @@
 package top.criswjh.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * spring security 配置类
@@ -17,16 +20,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 自定义编写的登陆页面
         http.formLogin()
                 // 登陆页面设置
-                .loginPage("/login.html")
+//                .loginPage("/login.html")
                 // 设置登陆访问路径
                 .loginProcessingUrl("/user/login")
                 // 登陆成功后跳转的路径
                 .defaultSuccessUrl("/test/index").permitAll()
                 .and().authorizeRequests()
                 // 设置可以放行的路径，不需要认证
-                .antMatchers("/", "/user/login").permitAll()
+                .antMatchers("/","/doc.html","/text/**", "/user/login").permitAll()
                 .anyRequest().authenticated()
                 // 关闭csrf防护
                 .and().csrf().disable();
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }

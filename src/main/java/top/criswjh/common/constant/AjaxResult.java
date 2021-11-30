@@ -1,6 +1,5 @@
 package top.criswjh.common.constant;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
