@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.criswjh.common.constant.AjaxResult;
+import top.criswjh.common.AjaxResult;
 import top.criswjh.entity.Users;
 import top.criswjh.service.UsersService;
 

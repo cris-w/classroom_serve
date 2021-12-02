@@ -1,5 +1,6 @@
-package top.criswjh.common.constant;
+package top.criswjh.common;
 
+import java.io.Serializable;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
@@ -9,7 +10,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode
-public class AjaxResult<T> {
+public class AjaxResult<T> implements Serializable {
     private static final long serialVersionUID = 1L;
     private int code;
     private String msg;

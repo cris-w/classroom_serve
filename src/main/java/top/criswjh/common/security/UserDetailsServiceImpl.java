@@ -1,4 +1,4 @@
-package top.criswjh.security;
+package top.criswjh.common.security;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import java.util.List;
