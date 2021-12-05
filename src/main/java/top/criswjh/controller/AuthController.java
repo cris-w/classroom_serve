@@ -33,6 +33,7 @@ public class AuthController extends BaseController{
         String key = IdUtil.objectId();
         String code = producer.createText();
 
+        // 用于测试
         key = "123";
         code = "123";
 

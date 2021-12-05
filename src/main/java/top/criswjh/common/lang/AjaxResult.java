@@ -35,6 +35,7 @@ public class AjaxResult<T> implements Serializable {
         return success(msg, null);
     }
 
+
     public static <T> AjaxResult<T> success(String msg, T data) {
         return new AjaxResult(200, msg, data);
     }

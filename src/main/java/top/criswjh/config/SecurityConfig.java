@@ -16,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import top.criswjh.security.filter.CaptchaFilter;
 import top.criswjh.security.filter.JwtAuthenticationFilter;
+import top.criswjh.security.handle.JwtAccessDeniedHandler;
+import top.criswjh.security.handle.JwtAuthenticationEntryPoint;
 import top.criswjh.security.handle.LoginFailureHandler;
 import top.criswjh.security.handle.LoginSuccessHandler;
 
@@ -29,6 +31,9 @@ import top.criswjh.security.handle.LoginSuccessHandler;
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    /**
+     * 白名单
+     */
     private static final String[] URL_WHITELIST = {
             "/",
             "/doc.html",
@@ -62,6 +67,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource
     private CaptchaFilter captchaFilter;
 
+    /**
+     * Jwt认证入口
+     */
+    @Resource
+    JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+
+    /**
+     * 拒绝访问处理器
+     */
+    @Resource
+    JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
     @Bean
     JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
         return new JwtAuthenticationFilter(authenticationManager());
@@ -79,12 +96,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
+                // 配置拦截规则
                 .and()
                 .authorizeRequests()
                 // 设置可以放行的路径，不需要认证
                 .antMatchers(URL_WHITELIST).permitAll()
                 .anyRequest().authenticated()
 
+                // 异常处理
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .accessDeniedHandler(jwtAccessDeniedHandler)
+
+                // 配置自定义过滤器
                 .and()
                 .addFilter(jwtAuthenticationFilter())
                 .addFilterBefore(captchaFilter, UsernamePasswordAuthenticationFilter.class);
