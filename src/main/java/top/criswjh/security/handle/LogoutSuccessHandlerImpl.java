@@ -1,17 +1,4 @@
-package top.criswjh.common.security.handle;
-
-import cn.hutool.http.HttpStatus;
-import java.io.IOException;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.token.TokenService;
-import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
-import top.criswjh.common.AjaxResult;
-import top.criswjh.util.JsonUtils;
-import top.criswjh.util.ServletUtils;
+package top.criswjh.security.handle;
 
 /**
  * @author wjh

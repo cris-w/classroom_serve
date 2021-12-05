@@ -1,10 +1,12 @@
-package top.criswjh.common;
+package top.criswjh.common.lang;
 
 import java.io.Serializable;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
+ * 统一返回类
+ *
  * @author wjh
  * @date 2021/11/29 10:41 下午
  */

@@ -1,4 +1,4 @@
-package top.criswjh.common.security;
+package top.criswjh.security;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import java.util.List;
@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import top.criswjh.entity.Users;
 import top.criswjh.mapper.UsersMapper;
+import top.criswjh.security.dto.LoginUser;
 
 /**
  * @author wjh

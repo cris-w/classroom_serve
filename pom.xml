@@ -34,6 +34,12 @@
       <artifactId>jjwt</artifactId>
       <version>0.9.1</version>
     </dependency>
+    <!-- google 验证码 -->
+    <dependency>
+      <groupId>com.github.penggle</groupId>
+      <artifactId>kaptcha</artifactId>
+      <version>2.3.2</version>
+    </dependency>
     <!-- hu tool -->
     <dependency>
       <groupId>cn.hutool</groupId>
@@ -99,6 +105,11 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 
   <dependencyManagement>
@@ -123,6 +134,12 @@
           <source>1.8</source>
           <target>1.8</target>
           <encoding>UTF-8</encoding>
+          <excludes>
+            <exclude>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-configuration-processor</artifactId>
+            </exclude>
+          </excludes>
         </configuration>
       </plugin>
       <plugin>

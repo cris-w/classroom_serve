@@ -1,4 +1,4 @@
-package top.criswjh.common.security.handle;
+package top.criswjh.security.handle;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpStatus;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
-import top.criswjh.common.AjaxResult;
+import top.criswjh.common.lang.AjaxResult;
 import top.criswjh.util.JsonUtils;
 import top.criswjh.util.ServletUtils;
 

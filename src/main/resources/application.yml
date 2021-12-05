@@ -1,0 +1,5 @@
+classroom:
+  jwt:
+    head: Authorization
+    expire: 7  # 天
+    secret: wodemingzijiaozuowujunhuishibenz # 32 位密钥

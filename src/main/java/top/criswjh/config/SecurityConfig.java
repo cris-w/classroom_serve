@@ -1,5 +1,6 @@
 package top.criswjh.config;
 
+import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,42 +9,92 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import top.criswjh.security.filter.CaptchaFilter;
+import top.criswjh.security.filter.JwtAuthenticationFilter;
+import top.criswjh.security.handle.LoginFailureHandler;
+import top.criswjh.security.handle.LoginSuccessHandler;
 
 /**
  * spring security 配置类
+ *
  * @author wjh
  * @date 2021/11/29 10:09 下午
  */
 @Configuration
-//@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private static final String[] URL_WHITELIST = {
+            "/",
+            "/doc.html",
+            "/v2/**",
+            "/webjars/**",
+            "/favicon.ico",
+            "/swagger-resources/**",
+            "/login",
+            "/logout",
+            "/captcha",
+    };
 
     /**
      * 自定义用户认证逻辑
      */
-    @Autowired
+    @Resource
     private UserDetailsService userDetailsService;
+    /**
+     * 自定义登录失败处理
+     */
+    @Resource
+    private LoginFailureHandler loginFailureHandler;
+    /**
+     * 自定义登录成功处理
+     */
+    @Resource
+    private LoginSuccessHandler loginSuccessHandler;
+    /**
+     * 验证码过滤器
+     */
+    @Resource
+    private CaptchaFilter captchaFilter;
+
+    @Bean
+    JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+        return new JwtAuthenticationFilter(authenticationManager());
+    }
 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 自定义编写的登陆页面
         http.formLogin()
-                // 登陆页面设置
-//                .loginPage("/login.html")
-                // 设置登陆访问路径
-//                .loginProcessingUrl("/user/login")
-                // 登陆成功后跳转的路径
-//                .defaultSuccessUrl("/test/index").permitAll()
-                .and().authorizeRequests()
+                .successHandler(loginSuccessHandler)
+                .failureHandler(loginFailureHandler)
+                // 禁用session
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+                .and()
+                .authorizeRequests()
                 // 设置可以放行的路径，不需要认证
-                .antMatchers("/","/doc.html","/test/**", "/user/login").permitAll()
+                .antMatchers(URL_WHITELIST).permitAll()
                 .anyRequest().authenticated()
+
+                .and()
+                .addFilter(jwtAuthenticationFilter())
+                .addFilterBefore(captchaFilter, UsernamePasswordAuthenticationFilter.class);
+
+        http.cors()
                 // 关闭csrf防护
-                .and().csrf().disable();
+                .and()
+                .csrf().disable();
+
+
     }
 
     @Override
@@ -64,7 +115,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
