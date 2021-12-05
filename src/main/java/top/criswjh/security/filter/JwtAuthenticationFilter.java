@@ -14,6 +14,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
+import top.criswjh.entity.SysUser;
+import top.criswjh.security.UserDetailsServiceImpl;
+import top.criswjh.service.SysUserService;
 import top.criswjh.util.JwtUtils;
 
 /**
@@ -25,6 +28,10 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
     @Resource
     JwtUtils jwtUtils;
+    @Resource
+    UserDetailsServiceImpl userDetailsService;
+    @Resource
+    SysUserService userService;
 
     public JwtAuthenticationFilter(
             AuthenticationManager authenticationManager) {
@@ -50,11 +57,14 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             throw new JwtException("token 过期");
         }
 
+        // 通过token 获取用户信息
         String username = claims.getSubject();
-        // 获取用户权限信息
 
+        // 获取用户权限信息
+        SysUser user = userService.getUserByName(username);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                username, null, null);
+                username, null, userDetailsService.getUserAuthority(user.getId()));
+
         // 让security 完成用户登录
         SecurityContextHolder.getContext().setAuthentication(token);
         chain.doFilter(request, response);

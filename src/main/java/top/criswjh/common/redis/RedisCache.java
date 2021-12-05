@@ -43,7 +43,7 @@ public class RedisCache {
     }
 
     public boolean expire(String key, long timeout, TimeUnit unit) {
-        RBucket rBucket = this.redissonClient.getBucket(key);
+        RBucket<Object> rBucket = this.redissonClient.getBucket(key);
         return rBucket.expire(timeout, unit);
     }
 
@@ -116,4 +116,5 @@ public class RedisCache {
         Iterable<String> iterable = this.redissonClient.getKeys().getKeysByPattern(pattern);
         return Lists.newArrayList(iterable);
     }
+
 }

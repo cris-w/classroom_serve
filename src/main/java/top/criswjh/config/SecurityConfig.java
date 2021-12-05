@@ -18,6 +18,7 @@ import top.criswjh.security.filter.CaptchaFilter;
 import top.criswjh.security.filter.JwtAuthenticationFilter;
 import top.criswjh.security.handle.JwtAccessDeniedHandler;
 import top.criswjh.security.handle.JwtAuthenticationEntryPoint;
+import top.criswjh.security.handle.JwtLogoutSuccessHandler;
 import top.criswjh.security.handle.LoginFailureHandler;
 import top.criswjh.security.handle.LoginSuccessHandler;
 
@@ -28,7 +29,7 @@ import top.criswjh.security.handle.LoginSuccessHandler;
  * @date 2021/11/29 10:09 下午
  */
 @Configuration
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
@@ -66,13 +67,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Resource
     private CaptchaFilter captchaFilter;
-
+    /**
+     * 成功退出处理器
+     */
+    @Resource
+    private JwtLogoutSuccessHandler jwtLogoutSuccessHandler;
     /**
      * Jwt认证入口
      */
     @Resource
     JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-
     /**
      * 拒绝访问处理器
      */
@@ -89,8 +93,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // 自定义编写的登陆页面
         http.formLogin()
+                // 登录配置
                 .successHandler(loginSuccessHandler)
                 .failureHandler(loginFailureHandler)
+
+                // 登出配置
+                .and()
+                .logout()
+                .logoutSuccessHandler(jwtLogoutSuccessHandler)
+
                 // 禁用session
                 .and()
                 .sessionManagement()
@@ -130,7 +141,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * 解决 无法直接注入 AuthenticationManager
      *
-     * @return
+     * @return 
      * @throws Exception
      */
     @Bean

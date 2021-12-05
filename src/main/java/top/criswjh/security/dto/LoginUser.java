@@ -1,6 +1,8 @@
 package top.criswjh.security.dto;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,29 +18,62 @@ import top.criswjh.entity.Users;
  * @date 2021/12/4 11:23 下午
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Slf4j
 public class LoginUser implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
-    private Users user;
+
+    private Long userId;
+    private String password;
+    private final String username;
+    private final Collection<? extends GrantedAuthority> authorities;
+    private final boolean accountNonExpired;
+    private final boolean accountNonLocked;
+    private final boolean credentialsNonExpired;
+    private final boolean enabled;
+
+
+    /**
+     * Calls the more complex constructor with all boolean arguments set to {@code true}.
+     */
+    public LoginUser(Long userId, String username, String password,
+            Collection<? extends GrantedAuthority> authorities) {
+        this(userId, username, password, true, true, true, true, authorities);
+    }
+
+    public LoginUser(Long userId, String username, String password, boolean enabled,
+            boolean accountNonExpired, boolean credentialsNonExpired,
+            boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+
+        if (((username == null) || "".equals(username)) || (password == null)) {
+            throw new IllegalArgumentException(
+                    "Cannot pass null or empty values to constructor");
+        }
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.accountNonExpired = accountNonExpired;
+        this.credentialsNonExpired = credentialsNonExpired;
+        this.accountNonLocked = accountNonLocked;
+        this.authorities = authorities;
+    }
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.authorities;
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return this.username;
     }
 
     @Override

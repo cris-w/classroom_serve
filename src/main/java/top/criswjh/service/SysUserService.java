@@ -5,9 +5,43 @@ import top.criswjh.entity.SysUser;
 
 /**
  * @author wjh
- * @description 针对表【sys_user】的数据库操作Service
- * @createDate 2021-12-05 14:31:28
  */
 public interface SysUserService extends IService<SysUser> {
 
+    /**
+     * 通过 username 获取 user
+     *
+     * @param username
+     * @return user
+     */
+    SysUser getUserByName(String username);
+
+    /**
+     * 通过 id 获取 权限信息：ROLE_admin,Role_student,Role_teacher,sys:user:list.....
+     *
+     * @param userId id
+     * @return authority
+     */
+    String getUserAuthorityInfo(Long userId);
+
+    /**
+     * 删除用户权限缓存
+     *
+     * @param userId userid
+     */
+    void clearUserAuthorityInfo(Long userId);
+
+    /**
+     * 当角色信息发生改变时，删除用户权限缓存
+     *
+     * @param roleId roleId
+     */
+    void clearUserAuthorityInfoWhenRoleUpdate(Long roleId);
+
+    /**
+     * 当菜单信息发生改变时，删除用户权限缓存
+     *
+     * @param menuId menuId
+     */
+    void clearUserAuthorityInfoWhenMenuUpdate(Long menuId);
 }

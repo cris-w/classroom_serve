@@ -1,6 +1,7 @@
 package top.criswjh.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import java.util.List;
 import top.criswjh.entity.SysRole;
 
 /**
@@ -11,5 +12,11 @@ import top.criswjh.entity.SysRole;
 */
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
+    /**
+     * 通过 userID 茶查询 role
+     * @param userId
+     * @return
+     */
+    List<SysRole> getUserRoles(Long userId);
 
 }

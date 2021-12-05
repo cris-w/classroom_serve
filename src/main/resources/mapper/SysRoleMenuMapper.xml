@@ -13,4 +13,9 @@
     <sql id="Base_Column_List">
         id,role_id,menu_id
     </sql>
+  <select id="getRoleIdByMenuId" resultType="java.lang.Long">
+    select role_id
+    from sys_role_menu
+    where menu_id = #{menuId}
+  </select>
 </mapper>
