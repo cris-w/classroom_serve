@@ -2,6 +2,8 @@ package top.criswjh.security.handle;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -40,8 +42,9 @@ public class LoginSuccessHandler implements
         // 生成jwt，并放置到请求头中
         String jwt = jwtUtils.generateToken(authentication.getName());
         res.setHeader(jwtUtils.getHead(), jwt);
-
-        AjaxResult<Void> result = AjaxResult.success("登录成功");
+        HashMap<String, String> data = new HashMap<>();
+        data.put("token", jwt);
+        AjaxResult<Map> result = AjaxResult.success("登录成功", data);
 
         outputStream.write(Objects.requireNonNull(JsonUtils.toJsonString(result))
                 .getBytes(StandardCharsets.UTF_8));

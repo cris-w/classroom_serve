@@ -1,7 +1,9 @@
 package top.criswjh.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import java.util.List;
 import top.criswjh.entity.SysMenu;
+import top.criswjh.entity.dto.SysMenuDto;
 
 /**
  * @author wjh
@@ -10,4 +12,9 @@ import top.criswjh.entity.SysMenu;
  */
 public interface SysMenuService extends IService<SysMenu> {
 
+    /**
+     * 获取当前用户能管理的菜单列表
+     * @return list
+     */
+    List<SysMenuDto> getCurrentUserNav();
 }

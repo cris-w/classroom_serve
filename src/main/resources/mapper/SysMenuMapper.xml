@@ -13,7 +13,7 @@
             <result property="component" column="component" jdbcType="VARCHAR"/>
             <result property="type" column="type" jdbcType="INTEGER"/>
             <result property="icon" column="icon" jdbcType="VARCHAR"/>
-            <result property="ordernum" column="orderNum" jdbcType="INTEGER"/>
+            <result property="orderNum" column="orderNum" jdbcType="INTEGER"/>
             <result property="created" column="created" jdbcType="TIMESTAMP"/>
             <result property="updated" column="updated" jdbcType="TIMESTAMP"/>
             <result property="statu" column="statu" jdbcType="INTEGER"/>
