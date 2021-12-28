@@ -24,6 +24,7 @@ import top.criswjh.entity.SysUser;
  * @date 2021/12/3 6:35 下午
  */
 @RestController
+@RequestMapping("/auth")
 public class AuthController extends BaseController {
 
     @Resource
@@ -57,7 +58,7 @@ public class AuthController extends BaseController {
      * @param principal
      * @return
      */
-    @GetMapping("/sys/userInfo")
+    @GetMapping("/userInfo")
     public AjaxResult<Map<Object, Object>> userInfo(Principal principal) {
         SysUser user = sysUserService.getUserByName(principal.getName());
         return AjaxResult.success(

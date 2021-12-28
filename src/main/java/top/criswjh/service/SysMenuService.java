@@ -17,4 +17,10 @@ public interface SysMenuService extends IService<SysMenu> {
      * @return list
      */
     List<SysMenuDto> getCurrentUserNav();
+
+    /**
+     * 返回menu的树状结构
+     * @return menu-tree
+     */
+    List<SysMenu> tree();
 }

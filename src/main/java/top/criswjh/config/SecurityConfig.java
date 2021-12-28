@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/swagger-resources/**",
             "/login",
             "/logout",
-            "/captcha",
+            "/auth/captcha",
     };
 
     /**

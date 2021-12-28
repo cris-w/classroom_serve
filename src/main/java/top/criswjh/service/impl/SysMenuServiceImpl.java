@@ -1,7 +1,7 @@
 package top.criswjh.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
@@ -43,6 +43,15 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
 
         // 转成DTO
         return convert(menuTree);
+    }
+
+    @Override
+    public List<SysMenu> tree() {
+        // 获取所有菜单信息
+        List<SysMenu> sysMenus = list(new QueryWrapper<SysMenu>().orderByAsc("orderNum"));
+
+        // 转成树状结构
+        return buildTreeMenu(sysMenus);
     }
 
     /**

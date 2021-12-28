@@ -24,6 +24,7 @@ public class KaptchaConfig {
         properties.put("kaptcha.image.height", "40");
         properties.put("kaptcha.image.width", "120");
         properties.put("kaptcha.textproducer.font.size", "30");
+        properties.put("kaptcha.textproducer.font.names", "宋体,楷体,微软雅黑");
 
         Config config = new Config(properties);
         DefaultKaptcha kaptcha = new DefaultKaptcha();
