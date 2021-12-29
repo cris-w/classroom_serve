@@ -7,6 +7,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,7 +83,7 @@ public class SysMenuController extends BaseController {
      */
     @PostMapping("/save")
     @PreAuthorize(value = "hasAuthority('sys:menu:save')")
-    public AjaxResult<SysMenu> save(@RequestBody SysMenu menu) {
+    public AjaxResult<SysMenu> save(@Validated @RequestBody SysMenu menu) {
         menu.setCreated(DateUtil.date());
         sysMenuService.save(menu);
         return AjaxResult.success(menu);
@@ -96,7 +97,7 @@ public class SysMenuController extends BaseController {
      */
     @PostMapping("/update")
     @PreAuthorize(value = "hasAuthority('sys:menu:update')")
-    public AjaxResult<SysMenu> update(@RequestBody SysMenu menu) {
+    public AjaxResult<SysMenu> update(@Validated @RequestBody SysMenu menu) {
         menu.setUpdated(DateUtil.date());
         sysMenuService.updateById(menu);
 

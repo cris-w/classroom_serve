@@ -1,7 +1,11 @@
 package top.criswjh.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import java.util.List;
+import javax.annotation.Resource;
+import top.criswjh.entity.SysRole;
 import top.criswjh.entity.SysUserRole;
+import top.criswjh.mapper.SysRoleMapper;
 import top.criswjh.mapper.SysUserRoleMapper;
 import top.criswjh.service.SysUserRoleService;
 import org.springframework.stereotype.Service;
@@ -15,4 +19,11 @@ import org.springframework.stereotype.Service;
 public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUserRole>
         implements SysUserRoleService {
 
+    @Resource
+    private SysRoleMapper sysRoleMapper;
+
+    @Override
+    public List<SysRole> listRolesByUserId(Long id) {
+        return sysRoleMapper.getUserRolesById(id);
+    }
 }

@@ -19,11 +19,13 @@
         remark,created,updated,
         statu
   </sql>
-  <select id="getUserRoles" resultType="top.criswjh.entity.SysRole">
+  <select id="getUserRolesById" resultType="top.criswjh.entity.SysRole">
     select
     <include refid="Base_Column_List"/>
-    from sys_role
-    where id in
-    (select role_id from sys_user_role where user_id = #{userId})
+    FROM
+    sys_role r
+    JOIN sys_user_role u ON r.id = u.role_id
+    WHERE
+    u.user_id = {userId}
   </select>
 </mapper>

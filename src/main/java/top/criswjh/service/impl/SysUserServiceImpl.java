@@ -58,7 +58,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
             authority.append(cache);
         } else {
             // 获取权限编码
-            List<SysRole> roles = roleMapper.getUserRoles(userId);
+            List<SysRole> roles = roleMapper.getUserRolesById(userId);
             if (roles.size() > 0) {
                 String roleCodes = roles.stream().map(r -> "ROLE_" + r.getCode())
                         .collect(Collectors.joining(","));

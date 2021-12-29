@@ -6,6 +6,8 @@ import java.util.List;
 import lombok.Data;
 
 /**
+ * 菜单实体
+ *
  * @author wjh
  * @date 2021/12/6 8:16 下午
  */
