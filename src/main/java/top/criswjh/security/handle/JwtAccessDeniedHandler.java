@@ -25,7 +25,7 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest req,
             HttpServletResponse res, AccessDeniedException e)
-            throws IOException, ServletException {
+            throws IOException {
         res.setContentType("application/json;charset=UTF-8");
          // 无权 403
         res.setStatus(HttpServletResponse.SC_FORBIDDEN);

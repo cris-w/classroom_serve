@@ -64,12 +64,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
         return sysMenuMapper.selectCount(wrapper.eq(SysMenu::getName, name)) > 0;
     }
 
-    @Override
-    public boolean nameExistWhenEdit(String name) {
-        LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
-        return sysMenuMapper.selectCount(wrapper.eq(SysMenu::getName, name)) > 1;
-    }
-
     /**
      * 树形结构 -> SysMenuDto
      * @param menuTree

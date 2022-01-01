@@ -102,11 +102,16 @@ public class SysMenuController extends BaseController {
     @PostMapping("/update")
     @PreAuthorize(value = "hasAuthority('sys:menu:update')")
     public AjaxResult<SysMenu> update(@Validated @RequestBody SysMenu menu) {
-        if (sysMenuService.nameExistWhenEdit(menu.getName())) {
+        // 获得原数据
+        SysMenu old = sysMenuService.getById(menu.getId());
+        sysMenuService.removeById(menu.getId());
+        if (sysMenuService.nameExist(menu.getName())) {
+            sysMenuService.save(old);
             return AjaxResult.error("菜单名已存在！", menu);
         } else {
             menu.setUpdated(DateUtil.date());
-            sysMenuService.updateById(menu);
+            menu.setCreated(old.getCreated());
+            sysMenuService.save(menu);
 
             // 清除所有与该菜单相关的权限缓存
             sysUserService.clearUserAuthorityInfoWhenMenuUpdate(menu.getId());

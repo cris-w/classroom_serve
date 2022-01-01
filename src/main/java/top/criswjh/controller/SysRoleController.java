@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.naming.Name;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -32,7 +33,7 @@ import top.criswjh.entity.SysUserRole;
  */
 @RestController
 @RequestMapping("/sys/role")
-public class SysRoleController extends BaseController{
+public class SysRoleController extends BaseController {
 
     /**
      * 通过id获取角色信息
@@ -48,7 +49,8 @@ public class SysRoleController extends BaseController{
 
         // 通过 id 在 role-menu表中查询出所有关联菜单id
         LambdaQueryWrapper<SysRoleMenu> wrapper = new LambdaQueryWrapper<>();
-        List<SysRoleMenu> roleMenus = sysRoleMenuService.list(wrapper.eq(SysRoleMenu::getRoleId, id));
+        List<SysRoleMenu> roleMenus = sysRoleMenuService.list(
+                wrapper.eq(SysRoleMenu::getRoleId, id));
         List<Long> menuIds = roleMenus.stream().map(SysRoleMenu::getMenuId)
                 .collect(Collectors.toList());
         role.setMenuIds(menuIds);
@@ -82,6 +84,15 @@ public class SysRoleController extends BaseController{
     @PreAuthorize("hasAuthority('sys:role:save')")
     public AjaxResult<SysRole> save(@Validated @RequestBody SysRole sysRole) {
 
+        Integer flag = sysRoleService.nameExist(sysRole.getName(), sysRole.getCode());
+
+        if (flag == 1) {
+            return AjaxResult.error("角色名已存在", sysRole);
+        }
+
+        if (flag == 2) {
+            return AjaxResult.error("唯一编码已存在", sysRole);
+        }
         sysRole.setCreated(DateUtil.date());
         sysRole.setStatu(Const.STATUS_ON);
 
@@ -99,8 +110,24 @@ public class SysRoleController extends BaseController{
     @PreAuthorize("hasAuthority('sys:role:update')")
     public AjaxResult<SysRole> update(@Validated @RequestBody SysRole sysRole) {
 
+        // 原数据
+        SysRole old = sysRoleService.getById(sysRole.getId());
+        sysRoleService.removeById(sysRole.getId());
+
+        Integer flag = sysRoleService.nameExist(sysRole.getName(), sysRole.getCode());
+
+        if (flag == 1) {
+            sysRoleService.save(old);
+            return AjaxResult.error("角色名已存在", sysRole);
+        }
+        if (flag == 2) {
+            sysRoleService.save(old);
+            return AjaxResult.error("唯一编码已存在", sysRole);
+        }
+
         sysRole.setUpdated(DateUtil.date());
-        sysRoleService.updateById(sysRole);
+        sysRole.setCreated(old.getCreated());
+        sysRoleService.save(sysRole);
         // 更新缓存
         sysUserService.clearUserAuthorityInfoWhenRoleUpdate(sysRole.getId());
 
@@ -108,8 +135,7 @@ public class SysRoleController extends BaseController{
     }
 
     /**
-     * 删除角色
-     * 同步删除相关中间表的信息
+     * 删除角色 同步删除相关中间表的信息
      *
      * @param roleIds
      * @return
