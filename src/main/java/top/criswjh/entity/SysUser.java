@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 
+ * @author wjh
  * @TableName sys_user
  */
 @TableName(value ="sys_user")

@@ -23,4 +23,19 @@ public interface SysMenuService extends IService<SysMenu> {
      * @return menu-tree
      */
     List<SysMenu> tree();
+
+    /**
+     * 判断插入时name字段是否存在
+     *
+     * @param name name
+     * @return true 存在  false 不存在
+     */
+    boolean nameExist(String name);
+
+    /**
+     * 判断更新时name字段是否存在
+     * @param name name
+     * @return true 存在  false 不存在
+     */
+    boolean nameExistWhenEdit(String name);
 }

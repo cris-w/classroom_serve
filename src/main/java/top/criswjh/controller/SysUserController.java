@@ -6,6 +6,8 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +27,7 @@ import top.criswjh.common.lang.Const;
 import top.criswjh.entity.SysRole;
 import top.criswjh.entity.SysUser;
 import top.criswjh.entity.SysUserRole;
+import top.criswjh.entity.bo.PasswordBo;
 
 /**
  * @author wjh
@@ -184,5 +187,28 @@ public class SysUserController extends BaseController{
         sysUserService.save(user);
 
         return AjaxResult.success("用户密码重置成功");
+    }
+
+    /**
+     * 修改用户密码
+     *
+     * @return "
+     */
+    @PostMapping("/editPassword")
+    public AjaxResult<Void> editPassword(@Validated @RequestBody PasswordBo passwordBo, Principal principal) {
+
+        SysUser user = sysUserService.getUserByName(principal.getName());
+
+        boolean matches = passwordEncoder.matches(passwordBo.getOldPassword(), user.getPassword());
+        if(!matches) {
+            return AjaxResult.error("原密码输入错误");
+        }
+
+        user.setPassword(passwordEncoder.encode(passwordBo.getNewPassword()));
+        user.setUpdated(DateUtil.date());
+
+        sysUserService.save(user);
+
+        return AjaxResult.success("用户密码修改成功");
     }
 }

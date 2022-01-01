@@ -1,5 +1,6 @@
 package top.criswjh.common.exception;
 
+import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -20,14 +21,13 @@ import top.criswjh.common.lang.AjaxResult;
 @RestControllerAdvice
 public class GlobalException {
 
-
     /**
      * 表单实体检验异常
      * @param e e
      * @return error 400
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(value = IllegalArgumentException.class)
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public AjaxResult<Void> handler(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
         ObjectError objectError = bindingResult.getAllErrors().stream().findFirst().get();
@@ -36,7 +36,21 @@ public class GlobalException {
     }
 
     /**
+     * jwt异常
+     *
+     * @param e e
+     * @return error 50014
+     */
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(value = JwtException.class)
+    public AjaxResult<Void> handler(JwtException e) {
+        log.error("jwt异常-----------------{}", e.getMessage());
+        return AjaxResult.error(50014, e.getMessage());
+    }
+
+    /**
      * 非法参数异常
+     *
      * @param e e
      * @return error 400
      */

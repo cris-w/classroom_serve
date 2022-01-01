@@ -84,9 +84,13 @@ public class SysMenuController extends BaseController {
     @PostMapping("/save")
     @PreAuthorize(value = "hasAuthority('sys:menu:save')")
     public AjaxResult<SysMenu> save(@Validated @RequestBody SysMenu menu) {
-        menu.setCreated(DateUtil.date());
-        sysMenuService.save(menu);
-        return AjaxResult.success(menu);
+        if (sysMenuService.nameExist(menu.getName())) {
+            return AjaxResult.error("菜单名不可以重复哦！", menu);
+        } else {
+            menu.setCreated(DateUtil.date());
+            sysMenuService.save(menu);
+            return AjaxResult.success(menu);
+        }
     }
 
     /**
@@ -98,12 +102,16 @@ public class SysMenuController extends BaseController {
     @PostMapping("/update")
     @PreAuthorize(value = "hasAuthority('sys:menu:update')")
     public AjaxResult<SysMenu> update(@Validated @RequestBody SysMenu menu) {
-        menu.setUpdated(DateUtil.date());
-        sysMenuService.updateById(menu);
+        if (sysMenuService.nameExistWhenEdit(menu.getName())) {
+            return AjaxResult.error("菜单名已存在！", menu);
+        } else {
+            menu.setUpdated(DateUtil.date());
+            sysMenuService.updateById(menu);
 
-        // 清除所有与该菜单相关的权限缓存
-        sysUserService.clearUserAuthorityInfoWhenMenuUpdate(menu.getId());
-        return AjaxResult.success(menu);
+            // 清除所有与该菜单相关的权限缓存
+            sysUserService.clearUserAuthorityInfoWhenMenuUpdate(menu.getId());
+            return AjaxResult.success(menu);
+        }
     }
 
     /**
@@ -112,7 +120,7 @@ public class SysMenuController extends BaseController {
      * @param id
      * @return
      */
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     @PreAuthorize(value = "hasAuthority('sys:menu:delete')")
     public AjaxResult<Void> delete(@PathVariable Long id) {
         LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
@@ -124,7 +132,7 @@ public class SysMenuController extends BaseController {
         sysUserService.clearUserAuthorityInfoWhenMenuUpdate(id);
 
         // 删除菜单，并删除角色-菜单与之相关的记录
-        sysUserService.removeById(id);
+        sysMenuService.removeById(id);
         LambdaQueryWrapper<SysRoleMenu> wrapper1 = new LambdaQueryWrapper<>();
         sysRoleMenuService.remove(wrapper1.eq(SysRoleMenu::getMenuId, id));
 

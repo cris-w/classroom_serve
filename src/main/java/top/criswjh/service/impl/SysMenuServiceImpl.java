@@ -1,5 +1,6 @@
 package top.criswjh.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.ArrayList;
@@ -31,6 +32,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
     @Resource
     SysUserMapper sysUserMapper;
 
+    @Resource
+    SysMenuMapper sysMenuMapper;
+
     @Override
     public List<SysMenuDto> getCurrentUserNav() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -52,6 +56,18 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
 
         // 转成树状结构
         return buildTreeMenu(sysMenus);
+    }
+
+    @Override
+    public boolean nameExist(String name) {
+        LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
+        return sysMenuMapper.selectCount(wrapper.eq(SysMenu::getName, name)) > 0;
+    }
+
+    @Override
+    public boolean nameExistWhenEdit(String name) {
+        LambdaQueryWrapper<SysMenu> wrapper = new LambdaQueryWrapper<>();
+        return sysMenuMapper.selectCount(wrapper.eq(SysMenu::getName, name)) > 1;
     }
 
     /**
@@ -88,7 +104,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
         ArrayList<SysMenu> treeMenu = new ArrayList<>();
         for (SysMenu menu : menus) {
             for (SysMenu e : menus) {
-                // 双重循环寻找所有节点的字节点
+                // 双重循环寻找所有节点的子节点
                 if (menu.getId().equals(e.getParentId())) {
                     menu.getChildren().add(e);
                 }
