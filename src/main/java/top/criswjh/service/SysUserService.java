@@ -17,6 +17,14 @@ public interface SysUserService extends IService<SysUser> {
     SysUser getUserByName(String username);
 
     /**
+     * 新增用户时，判断数据库是否存在该用户名
+     *
+     * @param username name
+     * @return true 存在   false 不存在
+     */
+    boolean nameExist(String username);
+
+    /**
      * 通过 id 获取 权限信息：ROLE_admin,Role_student,Role_teacher,sys:user:list.....
      *
      * @param userId id

@@ -35,7 +35,7 @@ import top.criswjh.entity.bo.PasswordBo;
  */
 @RestController
 @RequestMapping("/sys/user")
-public class SysUserController extends BaseController{
+public class SysUserController extends BaseController {
 
     @Resource
     private BCryptPasswordEncoder passwordEncoder;
@@ -63,15 +63,16 @@ public class SysUserController extends BaseController{
     /**
      * 模糊查询；通过名称查询用户列表
      *
-     * @param name name
+     * @param username name
      * @return pageData
      */
     @GetMapping("/list")
     @PreAuthorize("hasAuthority('sys:user:list')")
-    public AjaxResult<Page<SysUser>> list(String name) {
+    public AjaxResult<Page<SysUser>> list(String username) {
 
         Page<SysUser> pageData = sysUserService.page(getPage(),
-                new QueryWrapper<SysUser>().like(StrUtil.isNotBlank(name), "name", name));
+                new QueryWrapper<SysUser>().like(StrUtil.isNotBlank(username), "username",
+                        username));
 
         // 将所有用户的角色查询出来并set进角色列表，用于页面展示
         pageData.getRecords().forEach(user -> {
@@ -89,6 +90,10 @@ public class SysUserController extends BaseController{
     @PostMapping("/save")
     @PreAuthorize("hasAuthority('sys:user:save')")
     public AjaxResult<SysUser> save(@Validated @RequestBody SysUser sysUser) {
+
+        if (sysUserService.nameExist(sysUser.getUsername())) {
+            return AjaxResult.error("用户名已存在", sysUser);
+        }
 
         sysUser.setCreated(DateUtil.date());
         sysUser.setStatu(Const.STATUS_ON);
@@ -114,6 +119,12 @@ public class SysUserController extends BaseController{
     @PreAuthorize("hasAuthority('sys:user:update')")
     public AjaxResult<SysUser> update(@Validated @RequestBody SysUser sysUser) {
 
+        SysUser old = sysUserService.getById(sysUser.getId());
+        if (sysUserService.nameExist(sysUser.getUsername()) && !sysUser.getUsername()
+                .equals(old.getUsername())) {
+            return AjaxResult.error("用户名已存在", sysUser);
+        }
+
         sysUser.setUpdated(DateUtil.date());
         sysUserService.updateById(sysUser);
 
@@ -121,8 +132,7 @@ public class SysUserController extends BaseController{
     }
 
     /**
-     * 删除用户
-     * 同步删除相关中间表的信息
+     * 删除用户 同步删除相关中间表的信息
      *
      * @param userIds ids
      * @return ids
@@ -132,7 +142,7 @@ public class SysUserController extends BaseController{
     @Transactional(rollbackFor = RuntimeException.class)
     public AjaxResult<Long[]> delete(@RequestBody Long[] userIds) {
 
-        sysRoleService.removeByIds(Arrays.asList(userIds));
+        sysUserService.removeByIds(Arrays.asList(userIds));
 
         // 删除 user-role表 表相关信息
         sysUserRoleService.remove(new QueryWrapper<SysUserRole>().in("user_id", userIds));
@@ -149,7 +159,7 @@ public class SysUserController extends BaseController{
     @PostMapping("/role/{userId}")
     @PreAuthorize("hasAuthority('sys:user:role')")
     @Transactional(rollbackFor = RuntimeException.class)
-    public AjaxResult<Void> rolePerm(@PathVariable Long userId, Long[] roleIds) {
+    public AjaxResult<Void> rolePerm(@PathVariable Long userId, @RequestBody Long[] roleIds) {
 
         List<SysUserRole> userRoles = new ArrayList<>();
 
@@ -184,7 +194,7 @@ public class SysUserController extends BaseController{
         user.setPassword(passwordEncoder.encode(Const.DEFAULT_PASSWORD));
         user.setUpdated(DateUtil.date());
 
-        sysUserService.save(user);
+        sysUserService.updateById(user);
 
         return AjaxResult.success("用户密码重置成功");
     }
@@ -195,12 +205,13 @@ public class SysUserController extends BaseController{
      * @return "
      */
     @PostMapping("/editPassword")
-    public AjaxResult<Void> editPassword(@Validated @RequestBody PasswordBo passwordBo, Principal principal) {
+    public AjaxResult<Void> editPassword(@Validated @RequestBody PasswordBo passwordBo,
+            Principal principal) {
 
         SysUser user = sysUserService.getUserByName(principal.getName());
 
         boolean matches = passwordEncoder.matches(passwordBo.getOldPassword(), user.getPassword());
-        if(!matches) {
+        if (!matches) {
             return AjaxResult.error("原密码输入错误");
         }
 

@@ -47,6 +47,12 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
     }
 
     @Override
+    public boolean nameExist(String username) {
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        return userMapper.selectCount(wrapper.eq(SysUser::getUsername, username)) > 0;
+    }
+
+    @Override
     public String getUserAuthorityInfo(Long userId) {
 
         // 权限

@@ -23,16 +23,14 @@ implements SysRoleService{
     SysRoleMapper sysRoleMapper;
 
     @Override
-    public Integer nameExist(String name, String code) {
+    public Boolean nameExist(String name) {
         LambdaQueryWrapper<SysRole> wrapper = new LambdaQueryWrapper<>();
-        if (sysRoleMapper.selectCount(wrapper.eq(SysRole::getName, name)) > 0) {
-            return 1;
-        }
+        return sysRoleMapper.selectCount(wrapper.eq(SysRole::getName, name)) > 0;
+    }
 
-        LambdaQueryWrapper<SysRole> wrapper1 = new LambdaQueryWrapper<>();
-        if(sysRoleMapper.selectCount(wrapper1.eq(SysRole::getCode, code)) > 0) {
-            return 2;
-        }
-        return 0;
+    @Override
+    public Boolean codeExist(String code) {
+        LambdaQueryWrapper<SysRole> wrapper = new LambdaQueryWrapper<>();
+        return sysRoleMapper.selectCount(wrapper.eq(SysRole::getCode, code)) > 0;
     }
 }

@@ -84,13 +84,11 @@ public class SysRoleController extends BaseController {
     @PreAuthorize("hasAuthority('sys:role:save')")
     public AjaxResult<SysRole> save(@Validated @RequestBody SysRole sysRole) {
 
-        Integer flag = sysRoleService.nameExist(sysRole.getName(), sysRole.getCode());
-
-        if (flag == 1) {
+        if (sysRoleService.nameExist(sysRole.getName())) {
             return AjaxResult.error("角色名已存在", sysRole);
         }
 
-        if (flag == 2) {
+        if (sysRoleService.codeExist(sysRole.getCode())) {
             return AjaxResult.error("唯一编码已存在", sysRole);
         }
         sysRole.setCreated(DateUtil.date());
@@ -112,22 +110,16 @@ public class SysRoleController extends BaseController {
 
         // 原数据
         SysRole old = sysRoleService.getById(sysRole.getId());
-        sysRoleService.removeById(sysRole.getId());
 
-        Integer flag = sysRoleService.nameExist(sysRole.getName(), sysRole.getCode());
-
-        if (flag == 1) {
-            sysRoleService.save(old);
+        if (sysRoleService.nameExist(sysRole.getName()) && !old.getName().equals(sysRole.getName())) {
             return AjaxResult.error("角色名已存在", sysRole);
         }
-        if (flag == 2) {
-            sysRoleService.save(old);
+        if (sysRoleService.codeExist(sysRole.getCode()) && !old.getCode().equals(sysRole.getCode())) {
             return AjaxResult.error("唯一编码已存在", sysRole);
         }
 
         sysRole.setUpdated(DateUtil.date());
-        sysRole.setCreated(old.getCreated());
-        sysRoleService.save(sysRole);
+        sysRoleService.updateById(sysRole);
         // 更新缓存
         sysUserService.clearUserAuthorityInfoWhenRoleUpdate(sysRole.getId());
 

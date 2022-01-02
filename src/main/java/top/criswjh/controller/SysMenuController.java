@@ -104,14 +104,11 @@ public class SysMenuController extends BaseController {
     public AjaxResult<SysMenu> update(@Validated @RequestBody SysMenu menu) {
         // 获得原数据
         SysMenu old = sysMenuService.getById(menu.getId());
-        sysMenuService.removeById(menu.getId());
-        if (sysMenuService.nameExist(menu.getName())) {
-            sysMenuService.save(old);
+        if (sysMenuService.nameExist(menu.getName()) && !old.getName().equals(menu.getName())) {
             return AjaxResult.error("菜单名已存在！", menu);
         } else {
             menu.setUpdated(DateUtil.date());
-            menu.setCreated(old.getCreated());
-            sysMenuService.save(menu);
+            sysMenuService.updateById(menu);
 
             // 清除所有与该菜单相关的权限缓存
             sysUserService.clearUserAuthorityInfoWhenMenuUpdate(menu.getId());

@@ -9,12 +9,18 @@ import top.criswjh.entity.SysRole;
 public interface SysRoleService extends IService<SysRole> {
 
     /**
-     * 判断插入时name 或 唯一编码 字段是否存在
+     * 判断插入时name 字段是否存在
      *
      * @param name name
-     * @param code code
-     * @return 0 都不存在  1 name存在  2 code存在
+     * @return true 存在   false 不存在
      */
-    Integer nameExist(String name, String code);
+    Boolean nameExist(String name);
+
+    /**
+     * 判断插入 唯一编码 字段是否存在
+     * @param code
+     * @return true 存在   false 不存在
+     */
+    Boolean codeExist(String code);
 
 }

@@ -26,7 +26,7 @@ public class GlobalException {
      * @param e e
      * @return error 400
      */
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public AjaxResult<Void> handler(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
@@ -41,7 +41,7 @@ public class GlobalException {
      * @param e e
      * @return error 50014
      */
-    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(value = JwtException.class)
     public AjaxResult<Void> handler(JwtException e) {
         log.error("jwt异常-----------------{}", e.getMessage());
@@ -54,7 +54,7 @@ public class GlobalException {
      * @param e e
      * @return error 400
      */
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(value = IllegalArgumentException.class)
     public AjaxResult<Void> handler(IllegalArgumentException e) {
         log.error("Assert异常-----------------{}", e.getMessage());
