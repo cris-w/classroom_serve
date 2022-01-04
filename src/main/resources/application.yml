@@ -3,3 +3,10 @@ classroom:
     head: Authorization
     expire: 7  # 天
     secret: wodemingzijiaozuowujunhuishibenz # 32 位密钥
+
+  oos:
+    qiniu:
+      domain: https://cdn.criswjh.top
+      accessKey: M-zinKumupNvX2yAJC8Eh8Qxo8YvRfv1zZ5esU7W
+      secretKey: Csca_kM8wHsU30oTaoSPKhGb9WqEkgcWVQLwS6my
+      bucketName: wjh-oos

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import top.criswjh.common.lang.AjaxResult;
 import top.criswjh.entity.Users;
 import top.criswjh.service.UsersService;
+import top.criswjh.util.OosUtil;
 
 /**
  * @author wjh
@@ -25,6 +26,8 @@ public class TestController {
 
     @Resource
     UsersService usersService;
+    @Resource
+    OosUtil oosUtil;
 
     @PreAuthorize("hasRole('admin')")
     @ApiOperation(value = "获取admin")
@@ -38,5 +41,10 @@ public class TestController {
     @PostMapping("/testAjax")
     public AjaxResult<Users> testAjax(@RequestBody Users user){
         return AjaxResult.success(user);
+    }
+
+    @GetMapping("testoos")
+    public AjaxResult testOos() {
+        return AjaxResult.success(oosUtil.toString());
     }
 }

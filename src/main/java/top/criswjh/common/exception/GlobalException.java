@@ -3,6 +3,7 @@ package top.criswjh.common.exception;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -23,6 +24,7 @@ public class GlobalException {
 
     /**
      * 表单实体检验异常
+     *
      * @param e e
      * @return error 400
      */
@@ -59,6 +61,19 @@ public class GlobalException {
     public AjaxResult<Void> handler(IllegalArgumentException e) {
         log.error("Assert异常-----------------{}", e.getMessage());
         return AjaxResult.error(400, e.getMessage());
+    }
+
+    /**
+     * spring security 权限不足
+     *
+     * @param e e
+     * @return error 400
+     */
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(value = AccessDeniedException.class)
+    public AjaxResult<Void> handler(AccessDeniedException e) {
+        log.error("权限异常-----------------{}", e.getMessage());
+        return AjaxResult.error(403, e.getMessage());
     }
 
     /**

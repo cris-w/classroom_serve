@@ -59,6 +59,10 @@ public class CaptchaFilter extends OncePerRequestFilter {
             throw new CaptchaException("验证码错误");
         }
 
+        if (redisCache.getCacheObject(key) == null) {
+            throw new CaptchaException("验证码过期");
+        }
+
         if (!code.equals(redisCache.getCacheObject(key))) {
             throw new CaptchaException("验证码错误");
         }

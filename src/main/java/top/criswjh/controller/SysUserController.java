@@ -28,6 +28,7 @@ import top.criswjh.entity.SysRole;
 import top.criswjh.entity.SysUser;
 import top.criswjh.entity.SysUserRole;
 import top.criswjh.entity.bo.PasswordBo;
+import top.criswjh.entity.bo.UserAvatarBo;
 
 /**
  * @author wjh
@@ -218,8 +219,19 @@ public class SysUserController extends BaseController {
         user.setPassword(passwordEncoder.encode(passwordBo.getNewPassword()));
         user.setUpdated(DateUtil.date());
 
-        sysUserService.save(user);
+        sysUserService.updateById(user);
 
         return AjaxResult.success("用户密码修改成功");
+    }
+
+    @PostMapping("/editAvatar")
+    public AjaxResult<Void> editAvatar(@RequestBody UserAvatarBo bo) {
+
+        SysUser user = sysUserService.getUserByName(bo.getUsername());
+        user.setAvatar(bo.getAvatar());
+        user.setUpdated(DateUtil.date());
+        sysUserService.updateById(user);
+
+        return AjaxResult.success("头像修改成功");
     }
 }
