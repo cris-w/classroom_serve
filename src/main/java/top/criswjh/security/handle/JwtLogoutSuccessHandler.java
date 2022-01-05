@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Component;
 import top.criswjh.common.lang.AjaxResult;
+import top.criswjh.common.lang.Const;
 import top.criswjh.util.JsonUtils;
 import top.criswjh.util.JwtUtils;
 
@@ -36,7 +37,7 @@ public class JwtLogoutSuccessHandler implements LogoutSuccessHandler {
             new SecurityContextLogoutHandler().logout(req, res, authentication);
         }
 
-        res.setContentType("application/json;charset=UTF-8");
+        res.setContentType(Const.REQUEST_HEADERS_CONTENT_TYPE);
         ServletOutputStream outputStream = res.getOutputStream();
 
         // 将请求头中 Authorization 清空

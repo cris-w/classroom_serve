@@ -27,7 +27,7 @@ public class LoginFailureHandler implements
     public void onAuthenticationFailure(HttpServletRequest req,
             HttpServletResponse res, AuthenticationException e)
             throws IOException {
-        res.setContentType("application/json;charset=UTF-8");
+        res.setContentType(Const.REQUEST_HEADERS_CONTENT_TYPE);
         ServletOutputStream outputStream = res.getOutputStream();
 
         AjaxResult<Void> result = AjaxResult.error(

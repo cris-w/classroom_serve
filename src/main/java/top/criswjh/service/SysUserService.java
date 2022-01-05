@@ -1,6 +1,8 @@
 package top.criswjh.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 import top.criswjh.entity.SysUser;
 
 /**
@@ -52,4 +54,13 @@ public interface SysUserService extends IService<SysUser> {
      * @param menuId menuId
      */
     void clearUserAuthorityInfoWhenMenuUpdate(Long menuId);
+
+    /**
+     * 批量创建用户
+     *
+     * @param file
+     * @param sysUserService
+     * @return true 添加成功， false 添加失败
+     */
+    boolean savaUserBatch(MultipartFile file, SysUserService sysUserService);
 }

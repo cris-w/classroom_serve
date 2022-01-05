@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import top.criswjh.common.lang.AjaxResult;
 import top.criswjh.common.lang.Const;
 import top.criswjh.entity.SysRole;
@@ -29,6 +31,7 @@ import top.criswjh.entity.SysUser;
 import top.criswjh.entity.SysUserRole;
 import top.criswjh.entity.bo.PasswordBo;
 import top.criswjh.entity.bo.UserAvatarBo;
+import top.criswjh.service.SysUserService;
 
 /**
  * @author wjh
@@ -224,6 +227,12 @@ public class SysUserController extends BaseController {
         return AjaxResult.success("用户密码修改成功");
     }
 
+    /**
+     * 修改个人头像
+     *
+     * @param bo
+     * @return
+     */
     @PostMapping("/editAvatar")
     public AjaxResult<Void> editAvatar(@RequestBody UserAvatarBo bo) {
 
@@ -233,5 +242,21 @@ public class SysUserController extends BaseController {
         sysUserService.updateById(user);
 
         return AjaxResult.success("头像修改成功");
+    }
+
+    /**
+     * 批量添加用户
+     *
+     * @param file
+     * @return
+     */
+    @PostMapping("/addUserBatch")
+    public AjaxResult<Void> addUserBatch(@RequestPart("file") MultipartFile file) {
+
+        if (sysUserService.savaUserBatch(file, sysUserService)) {
+            return AjaxResult.success("添加成功");
+        }
+
+        return AjaxResult.error("添加失败，部分用户名已存在");
     }
 }

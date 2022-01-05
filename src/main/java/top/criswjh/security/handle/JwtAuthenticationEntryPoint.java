@@ -12,6 +12,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import top.criswjh.common.lang.AjaxResult;
+import top.criswjh.common.lang.Const;
 import top.criswjh.util.JsonUtils;
 
 /**
@@ -29,7 +30,7 @@ public class JwtAuthenticationEntryPoint implements
     public void commence(HttpServletRequest req,
             HttpServletResponse res, AuthenticationException e)
             throws IOException {
-        res.setContentType("application/json;charset=UTF-8");
+        res.setContentType(Const.REQUEST_HEADERS_CONTENT_TYPE);
         // 未认证 401
         res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         ServletOutputStream outputStream = res.getOutputStream();

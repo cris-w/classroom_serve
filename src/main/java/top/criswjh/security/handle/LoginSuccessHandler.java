@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import top.criswjh.common.lang.AjaxResult;
+import top.criswjh.common.lang.Const;
 import top.criswjh.util.JsonUtils;
 import top.criswjh.util.JwtUtils;
 
@@ -36,7 +37,7 @@ public class LoginSuccessHandler implements
     public void onAuthenticationSuccess(HttpServletRequest req,
             HttpServletResponse res, Authentication authentication)
             throws IOException, ServletException {
-        res.setContentType("application/json;charset=UTF-8");
+        res.setContentType(Const.REQUEST_HEADERS_CONTENT_TYPE);
         ServletOutputStream outputStream = res.getOutputStream();
 
         // 生成jwt，并放置到请求头中

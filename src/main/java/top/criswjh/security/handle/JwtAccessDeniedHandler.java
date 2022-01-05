@@ -11,6 +11,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 import top.criswjh.common.lang.AjaxResult;
+import top.criswjh.common.lang.Const;
 import top.criswjh.util.JsonUtils;
 
 /**
@@ -26,7 +27,7 @@ public class JwtAccessDeniedHandler implements AccessDeniedHandler {
     public void handle(HttpServletRequest req,
             HttpServletResponse res, AccessDeniedException e)
             throws IOException {
-        res.setContentType("application/json;charset=UTF-8");
+        res.setContentType(Const.REQUEST_HEADERS_CONTENT_TYPE);
          // 无权 403
         res.setStatus(HttpServletResponse.SC_FORBIDDEN);
 

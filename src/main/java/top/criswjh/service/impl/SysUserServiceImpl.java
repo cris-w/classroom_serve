@@ -1,16 +1,24 @@
 package top.criswjh.service.impl;
 
+import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import javax.annotation.Resource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import top.criswjh.common.exception.MyException;
 import top.criswjh.common.lang.Const;
 import top.criswjh.common.redis.RedisCache;
 import top.criswjh.entity.SysMenu;
 import top.criswjh.entity.SysRole;
 import top.criswjh.entity.SysUser;
+import top.criswjh.entity.dto.UserDto;
+import top.criswjh.listener.UserExcelListener;
 import top.criswjh.mapper.SysRoleMapper;
 import top.criswjh.mapper.SysRoleMenuMapper;
 import top.criswjh.mapper.SysUserMapper;
@@ -29,15 +37,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
     @Resource
     private SysUserMapper userMapper;
     @Resource
-    SysRoleMapper roleMapper;
+    private SysRoleMapper roleMapper;
     @Resource
-    SysMenuService menuService;
+    private SysMenuService menuService;
     @Resource
-    SysUserRoleMapper userRoleMapper;
+    private SysUserRoleMapper userRoleMapper;
     @Resource
-    SysRoleMenuMapper roleMenuMapper;
+    private SysRoleMenuMapper roleMenuMapper;
     @Resource
-    RedisCache redisCache;
+    private RedisCache redisCache;
+    @Resource
+    private BCryptPasswordEncoder passwordEncoder;
 
 
     @Override
@@ -103,5 +113,23 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
     public void clearUserAuthorityInfoWhenMenuUpdate(Long menuId) {
         Long roleId = roleMenuMapper.getRoleIdByMenuId(menuId);
         clearUserAuthorityInfoWhenRoleUpdate(roleId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = MyException.class)
+    public boolean savaUserBatch(MultipartFile file, SysUserService sysUserService) {
+
+        try {
+            // 文件输入流
+            InputStream stream = file.getInputStream();
+            EasyExcel.read(stream, UserDto.class,
+                            new UserExcelListener(sysUserService, passwordEncoder))
+                    .sheet()
+                    .doRead();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }

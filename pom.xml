@@ -24,8 +24,17 @@
       <artifactId>qiniu-java-sdk</artifactId>
       <version>[7.7.0, 7.7.99]</version>
     </dependency>
-
-
+    <!-- Excel -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>easyexcel</artifactId>
+      <version>2.2.11</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>3.17</version>
+    </dependency>
     <!-- 验证字段 -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
