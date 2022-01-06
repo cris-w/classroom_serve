@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.criswjh.mapper.EduVideoMapper">
+
+    <resultMap id="BaseResultMap" type="top.criswjh.entity.EduVideo">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="courseId" column="course_id" jdbcType="BIGINT"/>
+            <result property="chapterId" column="chapter_id" jdbcType="BIGINT"/>
+            <result property="title" column="title" jdbcType="VARCHAR"/>
+            <result property="videoSourceId" column="video_source_id" jdbcType="BIGINT"/>
+            <result property="videoOriginName" column="video_origin_name" jdbcType="VARCHAR"/>
+            <result property="sort" column="sort" jdbcType="INTEGER"/>
+            <result property="playCount" column="play_count" jdbcType="BIGINT"/>
+            <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+            <result property="gmtUpdate" column="gmt_update" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,course_id,chapter_id,
+        title,video_source_id,video_origin_name,
+        sort,play_count,gmt_create,
+        gmt_update
+    </sql>
+</mapper>

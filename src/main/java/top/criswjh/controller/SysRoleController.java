@@ -111,10 +111,12 @@ public class SysRoleController extends BaseController {
         // 原数据
         SysRole old = sysRoleService.getById(sysRole.getId());
 
-        if (sysRoleService.nameExist(sysRole.getName()) && !old.getName().equals(sysRole.getName())) {
+        if (sysRoleService.nameExist(sysRole.getName()) && !old.getName()
+                .equals(sysRole.getName())) {
             return AjaxResult.error("角色名已存在", sysRole);
         }
-        if (sysRoleService.codeExist(sysRole.getCode()) && !old.getCode().equals(sysRole.getCode())) {
+        if (sysRoleService.codeExist(sysRole.getCode()) && !old.getCode()
+                .equals(sysRole.getCode())) {
             return AjaxResult.error("唯一编码已存在", sysRole);
         }
 

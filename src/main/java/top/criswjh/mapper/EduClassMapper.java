@@ -1,12 +1,12 @@
 package top.criswjh.mapper;
 
-import top.criswjh.entity.EduSubject;
+import top.criswjh.entity.EduClass;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
 * @author wjh
 */
-public interface EduSubjectMapper extends BaseMapper<EduSubject> {
+public interface EduClassMapper extends BaseMapper<EduClass> {
 
 }
 

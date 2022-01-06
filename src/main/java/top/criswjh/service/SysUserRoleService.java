@@ -3,7 +3,9 @@ package top.criswjh.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.util.List;
 import top.criswjh.entity.SysRole;
+import top.criswjh.entity.SysUser;
 import top.criswjh.entity.SysUserRole;
+import top.criswjh.entity.vo.TeacherVo;
 
 /**
  * @author wjh
@@ -13,10 +15,19 @@ import top.criswjh.entity.SysUserRole;
 public interface SysUserRoleService extends IService<SysUserRole> {
 
     /**
-     * 通过用户id 查询 角色信息
+     * 通过用户id 查询该用户的 角色信息
      *
      * @param id
      * @return
      */
     List<SysRole> listRolesByUserId(Long id);
+
+    /**
+     * 通过角色名查询含有该角色的用户
+     *
+     * @param name name
+     * @return ids
+     */
+    List<TeacherVo> listUserByRoleName(String name);
+
 }

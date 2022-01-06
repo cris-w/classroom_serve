@@ -8,28 +8,53 @@ import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
 
-
 /**
+ * 
  * @author wjh
  */
-@TableName(value ="edu_subject")
+@TableName(value ="edu_video")
 @Data
-public class EduSubject implements Serializable {
+public class EduVideo implements Serializable {
     /**
-     * 课程ID
+     * ID
      */
     @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
-     * 课程名称
+     * 课程ID
+     */
+    private Long courseId;
+
+    /**
+     * 章节ID
+     */
+    private Long chapterId;
+
+    /**
+     * 标题
      */
     private String title;
+
+    /**
+     * 视屏ID
+     */
+    private Long videoSourceId;
+
+    /**
+     * 视屏源文件名
+     */
+    private String videoOriginName;
 
     /**
      * 排序字段
      */
     private Integer sort;
+
+    /**
+     * 播放次数
+     */
+    private Long playCount;
 
     /**
      * 创建时间
