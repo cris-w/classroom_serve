@@ -11,8 +11,8 @@ import top.criswjh.common.exception.MyException;
 import top.criswjh.common.lang.Const;
 import top.criswjh.entity.EduCourse;
 import top.criswjh.entity.EduCourseDescription;
-import top.criswjh.entity.bo.CourseInfoBo;
-import top.criswjh.mapper.EduCourseDescriptionMapper;
+import top.criswjh.entity.bo.edu.CourseInfoBo;
+import top.criswjh.entity.vo.edu.CourseInfoVo;
 import top.criswjh.service.EduCourseDescriptionService;
 import top.criswjh.service.EduCourseService;
 import top.criswjh.mapper.EduCourseMapper;
@@ -54,6 +54,27 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         eduCourseDescriptionService.save(eduCourseDescription);
 
         return id;
+    }
+
+    @Override
+    public CourseInfoVo getCourseInfoById(Long courseId) {
+        return eduCourseMapper.getCourseInfo(courseId);
+    }
+
+    @Override
+    public void updateCourseInfo(CourseInfoVo vo) {
+        // 修改课程表
+        EduCourse eduCourse = new EduCourse();
+        BeanUtils.copyProperties(vo, eduCourse);
+        eduCourse.setGmtUpdate(DateUtil.date());
+        eduCourseMapper.updateById(eduCourse);
+        // 修改课程描述表
+        EduCourseDescription description = new EduCourseDescription();
+        description.setDescription(vo.getDescription());
+        description.setGmtUpdate(DateUtil.date());
+        LambdaQueryWrapper<EduCourseDescription> wrapper = new LambdaQueryWrapper<>();
+        eduCourseDescriptionService.update(description,
+                wrapper.eq(EduCourseDescription::getCourseId, vo.getId()));
     }
 }
 

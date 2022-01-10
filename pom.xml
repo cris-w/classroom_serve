@@ -44,7 +44,7 @@
     <dependency>
       <groupId>org.redisson</groupId>
       <artifactId>redisson-spring-boot-starter</artifactId>
-      <version>3.16.4</version>
+      <version>3.16.7</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -66,13 +66,13 @@
     <dependency>
       <groupId>cn.hutool</groupId>
       <artifactId>hutool-all</artifactId>
-      <version>5.7.16</version>
+      <version>5.7.18</version>
     </dependency>
     <!--fastjson  -->
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>
-      <version>1.2.78</version>
+      <version>1.2.79</version>
     </dependency>
     <!-- knife4j -->
     <dependency>

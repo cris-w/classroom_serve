@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.criswjh.mapper.EduCourseMapper">
 
-    <resultMap id="BaseResultMap" type="top.criswjh.entity.EduCourse">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="teacherId" column="teacher_id" jdbcType="BIGINT"/>
-            <result property="classId" column="class_id" jdbcType="BIGINT"/>
-            <result property="title" column="title" jdbcType="VARCHAR"/>
-            <result property="lessonNum" column="lesson_num" jdbcType="INTEGER"/>
-            <result property="cover" column="cover" jdbcType="VARCHAR"/>
-            <result property="joinCount" column="join_ count" jdbcType="INTEGER"/>
-            <result property="status" column="status" jdbcType="INTEGER"/>
-            <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
-            <result property="gmtUpdate" column="gmt_update" jdbcType="TIMESTAMP"/>
-    </resultMap>
+  <resultMap id="BaseResultMap" type="top.criswjh.entity.EduCourse">
+    <id property="id" column="id" jdbcType="BIGINT"/>
+    <result property="teacherId" column="teacher_id" jdbcType="BIGINT"/>
+    <result property="classId" column="class_id" jdbcType="BIGINT"/>
+    <result property="title" column="title" jdbcType="VARCHAR"/>
+    <result property="lessonNum" column="lesson_num" jdbcType="INTEGER"/>
+    <result property="cover" column="cover" jdbcType="VARCHAR"/>
+    <result property="joinCount" column="join_ count" jdbcType="INTEGER"/>
+    <result property="status" column="status" jdbcType="INTEGER"/>
+    <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+    <result property="gmtUpdate" column="gmt_update" jdbcType="TIMESTAMP"/>
+  </resultMap>
 
-    <sql id="Base_Column_List">
-        id,teacher_id,class_id,
+  <sql id="Base_Column_List">
+    id,teacher_id,class_id,
         title,lesson_num,cover,
         join_ count,status,gmt_create,
         gmt_update
-    </sql>
+  </sql>
+  <select id="getCourseInfo" resultType="top.criswjh.entity.vo.edu.CourseInfoVo">
+    SELECT
+           c.id,
+           teacher_id,
+           class_id,
+           title,
+           lesson_num,
+           cover,
+           description
+    FROM edu_course c
+           LEFT JOIN edu_course_description d ON c.id = d.course_id
+    WHERE c.id = #{courseId}
+  </select>
 </mapper>

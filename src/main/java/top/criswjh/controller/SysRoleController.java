@@ -5,6 +5,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +32,7 @@ import top.criswjh.entity.SysUserRole;
  * @author wjh
  * @date 2021/12/29 4:15 PM
  */
+@Api(tags = "系统角色管理模块")
 @RestController
 @RequestMapping("/sys/role")
 public class SysRoleController extends BaseController {

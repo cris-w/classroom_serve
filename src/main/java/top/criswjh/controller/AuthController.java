@@ -4,6 +4,7 @@ import cn.hutool.core.codec.Base64;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.IdUtil;
 import com.google.code.kaptcha.Producer;
+import io.swagger.annotations.Api;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,6 +27,7 @@ import top.criswjh.entity.SysUser;
  * @author wjh
  * @date 2021/12/3 6:35 下午
  */
+@Api(tags = "权限模块")
 @RestController
 @RequestMapping("/auth")
 public class AuthController extends BaseController {

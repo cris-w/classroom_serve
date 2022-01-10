@@ -6,7 +6,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.plugins.pagination.PageDTO;
+import io.swagger.annotations.Api;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,14 +29,14 @@ import top.criswjh.common.lang.Const;
 import top.criswjh.entity.SysRole;
 import top.criswjh.entity.SysUser;
 import top.criswjh.entity.SysUserRole;
-import top.criswjh.entity.bo.PasswordBo;
-import top.criswjh.entity.bo.UserAvatarBo;
-import top.criswjh.service.SysUserService;
+import top.criswjh.entity.bo.sys.PasswordBo;
+import top.criswjh.entity.bo.sys.UserAvatarBo;
 
 /**
  * @author wjh
  * @date 2021/12/29 8:39 PM
  */
+@Api(tags = "系统用户管理模块")
 @RestController
 @RequestMapping("/sys/user")
 public class SysUserController extends BaseController {

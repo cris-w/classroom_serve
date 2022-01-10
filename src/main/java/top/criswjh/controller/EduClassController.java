@@ -1,6 +1,7 @@
 package top.criswjh.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import io.swagger.annotations.Api;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import top.criswjh.service.EduClassService;
  * @author wjh
  * @date 2022/1/7 2:09 AM
  */
+@Api(tags = "班级管理模块")
 @RestController
 @RequestMapping("/edu/class")
 public class EduClassController {

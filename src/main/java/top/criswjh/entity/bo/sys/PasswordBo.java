@@ -1,4 +1,4 @@
-package top.criswjh.entity.bo;
+package top.criswjh.entity.bo.sys;
 
 import javax.validation.constraints.NotBlank;
 import lombok.Data;

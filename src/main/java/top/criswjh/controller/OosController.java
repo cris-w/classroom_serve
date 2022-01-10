@@ -1,6 +1,7 @@
 package top.criswjh.controller;
 
 import cn.hutool.core.util.StrUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import top.criswjh.service.OosService;
  * @author wjh
  * @date 2022/1/4 5:43 PM
  */
+@Api(tags = "对象存储模块模块")
 @RestController
 @RequestMapping("/oos/fileOos")
 public class OosController {

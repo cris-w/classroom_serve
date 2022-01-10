@@ -3,6 +3,7 @@ package top.criswjh.controller;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import io.swagger.annotations.Api;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import top.criswjh.entity.dto.SysMenuDto;
  * @author wjh
  * @date 2021/12/6 7:55 下午
  */
+@Api(tags = "系统权限管理模块")
 @RestController
 @RequestMapping("/sys/menu")
 public class SysMenuController extends BaseController {
