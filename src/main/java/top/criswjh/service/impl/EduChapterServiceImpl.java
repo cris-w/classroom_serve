@@ -33,11 +33,11 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         // 根据ID 查询所有章节
         LambdaQueryWrapper<EduChapter> chapterWrapper = new LambdaQueryWrapper<>();
         List<EduChapter> eduChapterList = eduChapterMapper.selectList(
-                chapterWrapper.eq(EduChapter::getCourseId, courseId));
+                chapterWrapper.eq(EduChapter::getCourseId, courseId).orderByAsc(EduChapter::getSort));
         // 根据ID 查询所有小节
         LambdaQueryWrapper<EduVideo> videoWrapper = new LambdaQueryWrapper<>();
         List<EduVideo> eduVideoList = eduVideoService.list(
-                videoWrapper.eq(EduVideo::getCourseId, courseId));
+                videoWrapper.eq(EduVideo::getCourseId, courseId).orderByAsc(EduVideo::getSort));
 
         // 将对应的小节插入到对应章节中
         List<ChapterVo> result = new ArrayList<>();

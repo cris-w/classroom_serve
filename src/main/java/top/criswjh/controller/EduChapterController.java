@@ -84,7 +84,7 @@ public class EduChapterController {
      * @param chapterId courseId
      * @return ok
      */
-    @DeleteMapping("/deleteChapter/{chapterId}")
+    @GetMapping("/deleteChapter/{chapterId}")
     public AjaxResult<Void> deleteChapterInfo(@PathVariable Long chapterId) {
         boolean flag = eduChapterService.deleteById(chapterId);
         if (flag) {
