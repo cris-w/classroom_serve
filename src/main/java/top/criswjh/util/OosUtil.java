@@ -4,7 +4,9 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
+import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
@@ -72,6 +74,22 @@ public class OosUtil {
             ex.printStackTrace();
         }
         return null;
+    }
+
+    public boolean delete(String fileName) {
+        Configuration configuration = new Configuration(Region.huadong());
+        Auth auth = Auth.create(accessKey, secretKey);
+        BucketManager bucketManager = new BucketManager(auth, configuration);
+        try {
+            if (fileName != null) {
+                bucketManager.delete(bucketName, fileName);
+                return true;
+            }
+        } catch (QiniuException ex) {
+            //如果遇到异常，说明删除失败
+            System.out.println(ex.response.toString());
+        }
+        return  false;
     }
 
     /**

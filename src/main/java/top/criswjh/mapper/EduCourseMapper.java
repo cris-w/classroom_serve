@@ -2,6 +2,7 @@ package top.criswjh.mapper;
 
 import top.criswjh.entity.EduCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import top.criswjh.entity.vo.CoursePublishVo;
 import top.criswjh.entity.vo.edu.CourseInfoVo;
 
 /**
@@ -16,6 +17,14 @@ public interface EduCourseMapper extends BaseMapper<EduCourse> {
      * @return
      */
     CourseInfoVo getCourseInfo(Long courseId);
+
+    /**
+     * 根据课程ID，查询课程发布信息
+     *
+     * @param courseId
+     * @return
+     */
+    CoursePublishVo getCoursePublishInfo(Long courseId);
 }
 
 

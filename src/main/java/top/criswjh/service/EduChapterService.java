@@ -27,4 +27,11 @@ public interface EduChapterService extends IService<EduChapter> {
      * @return true 成功删除  false 该章节包含小节无法删除
      */
     boolean deleteById(Long chapterId);
+
+    /**
+     * 通过课程ID 删除章节信息
+     *
+     * @param courseId
+     */
+    void removeByCourseId(Long courseId);
 }

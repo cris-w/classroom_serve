@@ -52,7 +52,7 @@ public class EduCourse implements Serializable {
     private Integer joinCount;
 
     /**
-     * 状态
+     * 状态：0 未发布 1 已发布
      */
     private Integer status;
 

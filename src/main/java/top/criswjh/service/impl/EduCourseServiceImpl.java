@@ -11,12 +11,16 @@ import top.criswjh.common.exception.MyException;
 import top.criswjh.common.lang.Const;
 import top.criswjh.entity.EduCourse;
 import top.criswjh.entity.EduCourseDescription;
+import top.criswjh.entity.EduVideo;
 import top.criswjh.entity.bo.edu.CourseInfoBo;
+import top.criswjh.entity.vo.CoursePublishVo;
 import top.criswjh.entity.vo.edu.CourseInfoVo;
+import top.criswjh.service.EduChapterService;
 import top.criswjh.service.EduCourseDescriptionService;
 import top.criswjh.service.EduCourseService;
 import top.criswjh.mapper.EduCourseMapper;
 import org.springframework.stereotype.Service;
+import top.criswjh.service.EduVideoService;
 
 /**
  * @author wjh
@@ -29,6 +33,10 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     private EduCourseMapper eduCourseMapper;
     @Resource
     private EduCourseDescriptionService eduCourseDescriptionService;
+    @Resource
+    private EduChapterService eduChapterService;
+    @Resource
+    private EduVideoService eduVideoService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -38,7 +46,8 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         EduCourse eduCourse = new EduCourse();
         BeanUtils.copyProperties(courseInfo, eduCourse);
         eduCourse.setGmtCreate(DateUtil.date());
-        eduCourse.setStatus(Const.STATUS_ON);
+        // 设置状态为0 代表未发布
+        eduCourse.setStatus(Const.STATUS_OFF);
         int insert = eduCourseMapper.insert(eduCourse);
         if (insert == 0) {
             throw new MyException(500, "添加课程失败");
@@ -75,6 +84,26 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         LambdaQueryWrapper<EduCourseDescription> wrapper = new LambdaQueryWrapper<>();
         eduCourseDescriptionService.update(description,
                 wrapper.eq(EduCourseDescription::getCourseId, vo.getId()));
+    }
+
+    @Override
+    public CoursePublishVo coursePublishInfo(Long id) {
+        return eduCourseMapper.getCoursePublishInfo(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteCourse(Long courseId) {
+        // 根据课程ID 删除小节
+        eduVideoService.removeByCourseId(courseId);
+        // 根据课程ID 删除章节
+        eduChapterService.removeByCourseId(courseId);
+        // 根据课程ID 删除课程 & 描述
+        eduCourseDescriptionService.removeByCourseId(courseId);
+        int i = eduCourseMapper.deleteById(courseId);
+        if (i == 0) {
+            throw new MyException(200, "删除失败");
+        }
     }
 }
 

@@ -17,4 +17,12 @@ public interface OosService {
      * @return
      */
     String uploadAvatar(MultipartFile file);
+
+    /**
+     * 删除文件
+     *
+     * @param fileName
+     * @return
+     */
+    Boolean deleteFile(String fileName);
 }

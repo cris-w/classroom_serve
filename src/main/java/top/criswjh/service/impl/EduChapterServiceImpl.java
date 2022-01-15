@@ -71,6 +71,12 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
 
         return eduChapterMapper.deleteById(chapterId) > 0;
     }
+
+    @Override
+    public void removeByCourseId(Long courseId) {
+        LambdaQueryWrapper<EduChapter> wrapper = new LambdaQueryWrapper<>();
+        eduChapterMapper.delete(wrapper.eq(EduChapter::getCourseId, courseId));
+    }
 }
 
 

@@ -11,7 +11,7 @@
     <result property="title" column="title" jdbcType="VARCHAR"/>
     <result property="lessonNum" column="lesson_num" jdbcType="INTEGER"/>
     <result property="cover" column="cover" jdbcType="VARCHAR"/>
-    <result property="joinCount" column="join_ count" jdbcType="INTEGER"/>
+    <result property="joinCount" column="join_count" jdbcType="INTEGER"/>
     <result property="status" column="status" jdbcType="INTEGER"/>
     <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
     <result property="gmtUpdate" column="gmt_update" jdbcType="TIMESTAMP"/>
@@ -20,12 +20,11 @@
   <sql id="Base_Column_List">
     id,teacher_id,class_id,
         title,lesson_num,cover,
-        join_ count,status,gmt_create,
+        join_count,status,gmt_create,
         gmt_update
   </sql>
   <select id="getCourseInfo" resultType="top.criswjh.entity.vo.edu.CourseInfoVo">
-    SELECT
-           c.id,
+    SELECT c.id,
            teacher_id,
            class_id,
            title,
@@ -35,5 +34,19 @@
     FROM edu_course c
            LEFT JOIN edu_course_description d ON c.id = d.course_id
     WHERE c.id = #{courseId}
+  </select>
+  <select id="getCoursePublishInfo" resultType="top.criswjh.entity.vo.CoursePublishVo">
+    SELECT ec.id,
+           ec.title,
+           ec.cover,
+           ec.lesson_num,
+           cd.description,
+           su.username,
+           c.title as class_title
+    FROM edu_course ec
+           LEFT JOIN edu_course_description cd ON ec.id = cd.course_id
+           LEFT JOIN sys_user su ON ec.teacher_id = su.id
+           LEFT JOIN edu_class c on ec.class_id = c.id
+    WHERE ec.id = #{courseId}
   </select>
 </mapper>

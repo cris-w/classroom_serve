@@ -4,6 +4,8 @@ import cn.hutool.core.util.StrUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import javax.annotation.Resource;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -25,7 +27,7 @@ public class OosController {
     OosService oosService;
 
     @PostMapping("/upload")
-    public AjaxResult<String> uploadFile(@RequestPart("file")MultipartFile file) {
+    public AjaxResult<String> uploadFile(@RequestPart("file") MultipartFile file) {
 
         String path = oosService.uploadAvatar(file);
 
@@ -34,5 +36,13 @@ public class OosController {
         }
 
         return AjaxResult.success("上传成功", path);
+    }
+
+    @GetMapping("/delete/{fileName}")
+    public AjaxResult<Void> deleteFile(@PathVariable String fileName) {
+        if (oosService.deleteFile(fileName)) {
+            return AjaxResult.success("删除成功");
+        }
+        return AjaxResult.success("删除失败");
     }
 }
