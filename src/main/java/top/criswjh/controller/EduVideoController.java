@@ -53,6 +53,7 @@ public class EduVideoController {
 
     /**
      * 通过小节ID删除小节
+     * 同时删除OOS中的小节视屏
      *
      * @param videoId id
      * @return ok
@@ -60,7 +61,7 @@ public class EduVideoController {
     @GetMapping("/delVideo/{videoId}")
     public AjaxResult<Void> delVideo(@PathVariable Long videoId) {
 
-        eduVideoService.removeById(videoId);
+        eduVideoService.removeVideo(videoId);
         return AjaxResult.success("删除成功");
     }
 

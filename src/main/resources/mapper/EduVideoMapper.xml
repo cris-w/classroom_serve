@@ -9,7 +9,7 @@
             <result property="courseId" column="course_id" jdbcType="BIGINT"/>
             <result property="chapterId" column="chapter_id" jdbcType="BIGINT"/>
             <result property="title" column="title" jdbcType="VARCHAR"/>
-            <result property="videoSourceId" column="video_source_id" jdbcType="BIGINT"/>
+            <result property="videoSource" column="video_source" jdbcType="VARCHAR"/>
             <result property="videoOriginName" column="video_origin_name" jdbcType="VARCHAR"/>
             <result property="sort" column="sort" jdbcType="INTEGER"/>
             <result property="playCount" column="play_count" jdbcType="BIGINT"/>
@@ -19,7 +19,7 @@
 
     <sql id="Base_Column_List">
         id,course_id,chapter_id,
-        title,video_source_id,video_origin_name,
+        title,video_source,video_origin_name,
         sort,play_count,gmt_create,
         gmt_update
     </sql>

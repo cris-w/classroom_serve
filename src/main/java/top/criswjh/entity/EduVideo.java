@@ -38,9 +38,9 @@ public class EduVideo implements Serializable {
     private String title;
 
     /**
-     * 视屏ID
+     * 视屏地址
      */
-    private Long videoSourceId;
+    private String videoSource;
 
     /**
      * 视屏源文件名

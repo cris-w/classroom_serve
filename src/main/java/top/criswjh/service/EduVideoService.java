@@ -14,4 +14,11 @@ public interface EduVideoService extends IService<EduVideo> {
      * @param courseId
      */
     void removeByCourseId(Long courseId);
+
+    /**
+     * 删除小节以及小节视屏
+     *
+     * @param videoId
+     */
+    void removeVideo(Long videoId);
 }
