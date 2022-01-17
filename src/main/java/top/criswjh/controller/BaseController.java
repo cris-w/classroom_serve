@@ -7,6 +7,8 @@ import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.ServletRequestUtils;
 import top.criswjh.common.redis.RedisCache;
+import top.criswjh.service.EduClassService;
+import top.criswjh.service.EduVideoService;
 import top.criswjh.service.SysMenuService;
 import top.criswjh.service.SysRoleMenuService;
 import top.criswjh.service.SysRoleService;
@@ -39,6 +41,14 @@ public class BaseController {
 
     @Autowired
     SysRoleMenuService sysRoleMenuService;
+
+    @Autowired
+    EduVideoService eduVideoService;
+
+    @Autowired
+    EduClassService eduClassService;
+
+
 
     /**
      * 使用mybatis-plus 插件 获取当前页码

@@ -22,7 +22,7 @@ public class EduClass implements Serializable {
     private Long id;
 
     /**
-     * 学科名称
+     * 班级名称
      */
     private String title;
 
