@@ -4,6 +4,7 @@ import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ import top.criswjh.service.EduCourseService;
 import top.criswjh.mapper.EduCourseMapper;
 import org.springframework.stereotype.Service;
 import top.criswjh.service.EduVideoService;
+import top.criswjh.service.OosService;
 
 /**
  * @author wjh
@@ -37,6 +39,8 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     private EduChapterService eduChapterService;
     @Resource
     private EduVideoService eduVideoService;
+    @Resource
+    private OosService oosService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -94,6 +98,9 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteCourse(Long courseId) {
+        // 删除小节视屏
+        List<String> names = eduVideoService.getVideoSourceNameByCourseId(courseId);
+        oosService.deleteFileBatch(names);
         // 根据课程ID 删除小节
         eduVideoService.removeByCourseId(courseId);
         // 根据课程ID 删除章节

@@ -1,5 +1,6 @@
 package top.criswjh.service;
 
+import java.util.List;
 import top.criswjh.entity.EduVideo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -21,4 +22,12 @@ public interface EduVideoService extends IService<EduVideo> {
      * @param videoId
      */
     void removeVideo(Long videoId);
+
+    /**
+     * 通过课程ID 查询出所有视屏名称(不为空的)
+     *
+     * @param courseId
+     * @return list
+     */
+    List<String> getVideoSourceNameByCourseId(Long courseId);
 }

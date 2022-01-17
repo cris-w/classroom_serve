@@ -141,7 +141,8 @@ public class OosUtil {
         BucketManager bucketManager = new BucketManager(auth, configuration);
         try {
             BucketManager.BatchOperations batchOperations = new BucketManager.BatchOperations();
-            batchOperations.addDeleteOp(bucketName, String.valueOf(fileList));
+            String[] files = fileList.toArray(new String[0]);
+            batchOperations.addDeleteOp(bucketName, files);
             Response response = bucketManager.batch(batchOperations);
             BatchStatus[] batchStatusList = response.jsonToObject(BatchStatus[].class);
             for (int i = 0; i < fileList.size(); i++) {
