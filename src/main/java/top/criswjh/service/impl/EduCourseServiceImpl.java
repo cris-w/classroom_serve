@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 import top.criswjh.common.exception.MyException;
 import top.criswjh.common.lang.Const;
@@ -111,6 +112,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         if (i == 0) {
             throw new MyException(200, "删除失败");
         }
+    }
+
+    @Override
+    @Cacheable(value = "hotCourseList")
+    public List<EduCourse> getHotList() {
+        return eduCourseMapper.getHotList();
     }
 }
 

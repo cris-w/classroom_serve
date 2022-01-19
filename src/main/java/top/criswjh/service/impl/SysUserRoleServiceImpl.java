@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import top.criswjh.entity.SysRole;
 import top.criswjh.entity.SysUser;
 import top.criswjh.entity.SysUserRole;
@@ -39,6 +40,20 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     @Override
     public List<TeacherVo> listUserByRoleName(String name) {
         List<Long> ids = sysUserRoleMapper.getUserIdsByRoleName(name);
+        List<TeacherVo> userList = new ArrayList<>();
+        ids.forEach(id -> {
+            TeacherVo vo = new TeacherVo();
+            SysUser user = sysUserService.getById(id);
+            BeanUtils.copyProperties(user, vo);
+            userList.add(vo);
+        });
+        return userList;
+    }
+
+    @Override
+    @Cacheable(value = "hotTeacherList")
+    public List<TeacherVo> listHotUser(String name) {
+        List<Long> ids = sysUserRoleMapper.getHotUserIdsByRoleName(name);
         List<TeacherVo> userList = new ArrayList<>();
         ids.forEach(id -> {
             TeacherVo vo = new TeacherVo();

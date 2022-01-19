@@ -19,12 +19,17 @@
     where role_id = #{roleId}
   </select>
   <select id="getUserIdsByRoleName" resultType="java.lang.Long">
-    SELECT
-      sur.user_id
-    FROM
-      sys_user_role sur
-        LEFT JOIN sys_role sr ON sur.role_id = sr.id
-    WHERE
-      sr.NAME = #{roleName}
+    SELECT sur.user_id
+    FROM sys_user_role sur
+           LEFT JOIN sys_role sr ON sur.role_id = sr.id
+    WHERE sr.NAME = #{roleName}
+  </select>
+  <select id="getHotUserIdsByRoleName" resultType="java.lang.Long">
+    SELECT sur.user_id
+    FROM sys_user_role sur
+           LEFT JOIN sys_role sr ON sur.role_id = sr.id
+    WHERE sr.NAME = #{roleName}
+    order by sr.id
+    limit 4
   </select>
 </mapper>

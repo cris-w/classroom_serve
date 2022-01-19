@@ -91,7 +91,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
             }
 
             // 缓存到 redis 中，防止每次调用方法都要查询数据库获取权限
-            redisCache.setCacheObject(Const.GRANTED_AUTHORITY + userId, authority, 1,
+            redisCache.setCacheObject(Const.GRANTED_AUTHORITY + userId, authority.toString(), 1,
                     TimeUnit.HOURS);
         }
 

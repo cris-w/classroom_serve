@@ -7,7 +7,9 @@ import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.ServletRequestUtils;
 import top.criswjh.common.redis.RedisCache;
+import top.criswjh.service.CrmBannerService;
 import top.criswjh.service.EduClassService;
+import top.criswjh.service.EduCourseService;
 import top.criswjh.service.EduVideoService;
 import top.criswjh.service.SysMenuService;
 import top.criswjh.service.SysRoleMenuService;
@@ -47,6 +49,13 @@ public class BaseController {
 
     @Autowired
     EduClassService eduClassService;
+
+    @Autowired
+    EduCourseService eduCourseService;
+
+    @Autowired
+    CrmBannerService crmBannerService;
+
 
 
 

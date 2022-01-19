@@ -1,5 +1,6 @@
 package top.criswjh.service;
 
+import java.util.List;
 import top.criswjh.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.criswjh.entity.bo.edu.CourseInfoBo;
@@ -49,4 +50,11 @@ public interface EduCourseService extends IService<EduCourse> {
      * @param courseId
      */
     void deleteCourse(Long courseId);
+
+    /**
+     * 获取参加人数前8的课程
+     *
+     * @return list
+     */
+    List<EduCourse> getHotList();
 }

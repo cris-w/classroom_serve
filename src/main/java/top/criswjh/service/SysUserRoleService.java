@@ -30,4 +30,12 @@ public interface SysUserRoleService extends IService<SysUserRole> {
      */
     List<TeacherVo> listUserByRoleName(String name);
 
+    /**
+     * 通过角色名查询前四的用户
+     *
+     * @param name
+     * @return
+     */
+    List<TeacherVo> listHotUser(String name);
+
 }

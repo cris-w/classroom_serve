@@ -1,5 +1,6 @@
 package top.criswjh.mapper;
 
+import java.util.List;
 import top.criswjh.entity.EduCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import top.criswjh.entity.vo.CoursePublishVo;
@@ -25,6 +26,13 @@ public interface EduCourseMapper extends BaseMapper<EduCourse> {
      * @return
      */
     CoursePublishVo getCoursePublishInfo(Long courseId);
+
+    /**
+     * 获取参加人数前8的课程
+     *
+     * @return
+     */
+    List<EduCourse> getHotList();
 }
 
 

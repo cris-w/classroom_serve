@@ -1,15 +1,14 @@
 package top.criswjh.controller;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.map.MapBuilder;
+import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.sun.deploy.net.HttpRequest;
 import io.swagger.annotations.Api;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import java.util.List;
+import java.util.Map;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,11 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import top.criswjh.common.lang.AjaxResult;
 import top.criswjh.common.lang.Const;
 import top.criswjh.entity.EduCourse;
-import top.criswjh.entity.SysUser;
 import top.criswjh.entity.bo.edu.CourseInfoBo;
 import top.criswjh.entity.vo.CoursePublishVo;
+import top.criswjh.entity.vo.TeacherVo;
 import top.criswjh.entity.vo.edu.CourseInfoVo;
-import top.criswjh.service.EduCourseService;
 
 /**
  * @author wjh
@@ -34,8 +32,24 @@ import top.criswjh.service.EduCourseService;
 @RequestMapping("/edu/course")
 public class EduCourseController extends BaseController{
 
-    @Resource
-    private EduCourseService eduCourseService;
+    /**
+     * 查询热门课程和名师接口
+     * （查询参加人数前八的课程，以及前id前四的教师）
+     * 学生端使用
+     *
+     * @return list
+     */
+    @GetMapping("/index")
+    public AjaxResult<Map<Object, Object>> index() {
+        // 查询热度前8的课程
+        List<EduCourse> list = eduCourseService.getHotList();
+        // 查询id前4的教师
+        List<TeacherVo> teachers = sysUserRoleService.listHotUser("教师");
+        return AjaxResult.success(MapUtil.builder()
+                .put("courseList", list)
+                .put("teacherList", teachers)
+                .build());
+    }
 
     /**
      * 模糊查询：通过课程名查询课程列表

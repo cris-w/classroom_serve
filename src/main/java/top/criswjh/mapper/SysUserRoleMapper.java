@@ -24,4 +24,12 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
      * @return userIds
      */
     List<Long> getUserIdsByRoleName(String roleName);
+
+    /**
+     * 通过roleName 查询前四含有该角色的 userId
+     *
+     * @param roleName
+     * @return
+     */
+    List<Long> getHotUserIdsByRoleName(String roleName);
 }

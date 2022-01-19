@@ -49,4 +49,11 @@
            LEFT JOIN edu_class c on ec.class_id = c.id
     WHERE ec.id = #{courseId}
   </select>
+  <select id="getHotList" resultType="top.criswjh.entity.EduCourse">
+    select
+    <include refid="Base_Column_List"/>
+    from edu_course
+    order by join_count desc
+    limit 8
+  </select>
 </mapper>
