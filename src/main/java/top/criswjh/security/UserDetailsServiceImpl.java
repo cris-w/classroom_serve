@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import top.criswjh.common.lang.Const;
 import top.criswjh.entity.SysUser;
 import top.criswjh.security.dto.LoginUser;
 import top.criswjh.service.SysUserService;
@@ -30,14 +31,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 如果对象为空，抛出异常
         if (user == null) {
             throw new UsernameNotFoundException("用户名不存在");
-        } else {
-            // 返回User对象。
-            return new LoginUser(user.getId(), user.getUsername(), user.getPassword(), getUserAuthority(user.getId()));
         }
+        // 如果用户状态为禁用，抛出异常
+        if (user.getStatu().equals(Const.STATUS_OFF)) {
+            throw new UsernameNotFoundException("用户被禁用");
+        }
+        // 返回User对象。
+        return new LoginUser(user.getId(), user.getUsername(), user.getPassword(),
+                getUserAuthority(user.getId()));
+
     }
 
     /**
      * 通过 userId 获取 权限(角色、 菜单权限)
+     *
      * @param userId id
      * @return 权限列表
      */

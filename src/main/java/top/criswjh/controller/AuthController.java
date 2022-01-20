@@ -70,7 +70,7 @@ public class AuthController extends BaseController {
 
         // 获取该用户所有角色名
         List<SysRole> roleList = sysUserRoleService.listRolesByUserId(user.getId());
-        List<String> roles = roleList.stream().map(SysRole::getName).collect(Collectors.toList());
+        List<String> roles = roleList.stream().map(SysRole::getCode).collect(Collectors.toList());
 
         return AjaxResult.success(
                 MapUtil.builder()

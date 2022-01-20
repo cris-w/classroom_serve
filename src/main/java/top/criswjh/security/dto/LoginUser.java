@@ -1,15 +1,11 @@
 package top.criswjh.security.dto;
 
+import cn.hutool.core.util.StrUtil;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import top.criswjh.entity.Users;
 
 /**
  * 安全认证用户
@@ -46,7 +42,7 @@ public class LoginUser implements UserDetails {
             boolean accountNonExpired, boolean credentialsNonExpired,
             boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
 
-        if (((username == null) || "".equals(username)) || (password == null)) {
+        if (StrUtil.isEmpty(username) || StrUtil.isEmpty(password)) {
             throw new IllegalArgumentException(
                     "Cannot pass null or empty values to constructor");
         }

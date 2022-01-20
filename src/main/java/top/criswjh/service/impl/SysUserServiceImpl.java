@@ -111,8 +111,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
 
     @Override
     public void clearUserAuthorityInfoWhenMenuUpdate(Long menuId) {
-        Long roleId = roleMenuMapper.getRoleIdByMenuId(menuId);
-        clearUserAuthorityInfoWhenRoleUpdate(roleId);
+        List<Long> roleIds = roleMenuMapper.getRoleIdByMenuId(menuId);
+        roleIds.forEach(this::clearUserAuthorityInfoWhenRoleUpdate);
     }
 
     @Override
