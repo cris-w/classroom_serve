@@ -36,7 +36,7 @@ public class EduStudentExam implements Serializable {
     private Integer state;
 
     /**
-     * 成绩
+     * 考试成绩
      */
     private Integer score;
 

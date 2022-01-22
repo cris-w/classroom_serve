@@ -6,13 +6,13 @@
 
     <resultMap id="BaseResultMap" type="top.criswjh.entity.EduStudentQuestion">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="sutdentId" column="sutdent_id" jdbcType="BIGINT"/>
+            <result property="studentId" column="student_id" jdbcType="BIGINT"/>
             <result property="paperQuestionId" column="paper_question_id" jdbcType="BIGINT"/>
             <result property="answer" column="answer" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,sutdent_id,paper_question_id,
+        id,student_id,paper_question_id,
         answer
     </sql>
 </mapper>

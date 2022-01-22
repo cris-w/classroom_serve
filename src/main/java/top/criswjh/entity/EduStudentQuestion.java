@@ -23,7 +23,7 @@ public class EduStudentQuestion implements Serializable {
     /**
      * 学生ID
      */
-    private Long sutdentId;
+    private Long studentId;
 
     /**
      * 试卷-题目关联表ID

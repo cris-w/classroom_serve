@@ -37,6 +37,7 @@ public class EduPaperQuestion implements Serializable {
 
     /**
      * 类型：0单选、1多选、2简答
+     * 类型包含在问题表中，这里为了方便查询，因此在次关联表中也添加了类型
      */
     private Integer type;
 
