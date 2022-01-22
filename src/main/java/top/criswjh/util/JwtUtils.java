@@ -20,8 +20,18 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "classroom.jwt")
 public class JwtUtils {
+
+    /**
+     * 密钥
+     */
     public String secret;
+    /**
+     * 过期时间
+     */
     public Integer expire;
+    /**
+     * 请求头：Authorization
+     */
     private String head;
 
     /**

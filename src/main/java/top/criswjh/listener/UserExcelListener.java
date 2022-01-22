@@ -21,7 +21,7 @@ import top.criswjh.service.SysUserService;
 public class UserExcelListener extends AnalysisEventListener<UserDto> {
 
     /**
-     * 每隔10条存储数据库，然后清理list ，方便内存回收
+     * 每隔50条存储数据库，然后清理list ，方便内存回收
      */
     private static final int BATCH_COUNT = 50;
     List<SysUser> list = new ArrayList<>();
