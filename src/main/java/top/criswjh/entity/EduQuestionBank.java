@@ -47,11 +47,6 @@ public class EduQuestionBank implements Serializable {
     private Integer level;
 
     /**
-     * 关联的知识点ID，多个ID通过"，"隔开
-     */
-    private String knowledge;
-
-    /**
      * 创建时间
      */
     private Date gmtCreate;

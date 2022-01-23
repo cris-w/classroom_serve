@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="top.criswjh.mapper.EduQuestionBankMapper">
 
-    <resultMap id="BaseResultMap" type="top.criswjh.entity.EduQuestionBank">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="title" column="title" jdbcType="VARCHAR"/>
-            <result property="option" column="option" jdbcType="VARCHAR"/>
-            <result property="answer" column="answer" jdbcType="VARCHAR"/>
-            <result property="type" column="type" jdbcType="INTEGER"/>
-            <result property="level" column="level" jdbcType="INTEGER"/>
-            <result property="knowledge" column="knowledge" jdbcType="VARCHAR"/>
-            <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
-            <result property="gmtUpdate" column="gmt_update" jdbcType="TIMESTAMP"/>
-    </resultMap>
+  <resultMap id="BaseResultMap" type="top.criswjh.entity.EduQuestionBank">
+    <id property="id" column="id" jdbcType="BIGINT"/>
+    <result property="title" column="title" jdbcType="VARCHAR"/>
+    <result property="option" column="option" jdbcType="VARCHAR"/>
+    <result property="answer" column="answer" jdbcType="VARCHAR"/>
+    <result property="type" column="type" jdbcType="INTEGER"/>
+    <result property="level" column="level" jdbcType="INTEGER"/>
+    <result property="gmtCreate" column="gmt_create" jdbcType="TIMESTAMP"/>
+    <result property="gmtUpdate" column="gmt_update" jdbcType="TIMESTAMP"/>
+  </resultMap>
 
-    <sql id="Base_Column_List">
-        id,title,option,
-        answer,type,level,
-        knowledge,gmt_create,gmt_update
-    </sql>
+  <sql id="Base_Column_List">
+    id,title,option,
+        answer,type,level
+        ,gmt_create,gmt_update
+  </sql>
 </mapper>
