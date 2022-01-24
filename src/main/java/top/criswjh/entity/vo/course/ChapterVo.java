@@ -1,4 +1,4 @@
-package top.criswjh.entity.vo.edu;
+package top.criswjh.entity.vo.course;
 
 import java.util.ArrayList;
 import java.util.List;

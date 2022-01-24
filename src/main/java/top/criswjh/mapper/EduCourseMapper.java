@@ -4,7 +4,7 @@ import java.util.List;
 import top.criswjh.entity.EduCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import top.criswjh.entity.vo.CoursePublishVo;
-import top.criswjh.entity.vo.edu.CourseInfoVo;
+import top.criswjh.entity.vo.course.CourseInfoVo;
 
 /**
 * @author wjh

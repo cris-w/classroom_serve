@@ -5,7 +5,7 @@ import top.criswjh.entity.EduCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.criswjh.entity.bo.edu.CourseInfoBo;
 import top.criswjh.entity.vo.CoursePublishVo;
-import top.criswjh.entity.vo.edu.CourseInfoVo;
+import top.criswjh.entity.vo.course.CourseInfoVo;
 
 /**
 * @author wjh

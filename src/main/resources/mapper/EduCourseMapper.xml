@@ -23,7 +23,7 @@
         join_count,status,gmt_create,
         gmt_update
   </sql>
-  <select id="getCourseInfo" resultType="top.criswjh.entity.vo.edu.CourseInfoVo">
+  <select id="getCourseInfo" resultType="top.criswjh.entity.vo.course.CourseInfoVo">
     SELECT c.id,
            teacher_id,
            class_id,

@@ -1,7 +1,6 @@
 package top.criswjh.controller;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.map.MapBuilder;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -21,7 +20,7 @@ import top.criswjh.entity.EduCourse;
 import top.criswjh.entity.bo.edu.CourseInfoBo;
 import top.criswjh.entity.vo.CoursePublishVo;
 import top.criswjh.entity.vo.TeacherVo;
-import top.criswjh.entity.vo.edu.CourseInfoVo;
+import top.criswjh.entity.vo.course.CourseInfoVo;
 
 /**
  * @author wjh

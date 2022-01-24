@@ -3,7 +3,7 @@ package top.criswjh.service;
 import java.util.List;
 import top.criswjh.entity.EduChapter;
 import com.baomidou.mybatisplus.extension.service.IService;
-import top.criswjh.entity.vo.edu.ChapterVo;
+import top.criswjh.entity.vo.course.ChapterVo;
 
 /**
  * 课程Service

@@ -103,7 +103,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu>
                     menu.getChildren().add(e);
                 }
             }
-            // 返回跟节点
+            // 返回根节点
             if (menu.getParentId() == 0L) {
                 treeMenu.add(menu);
             }
