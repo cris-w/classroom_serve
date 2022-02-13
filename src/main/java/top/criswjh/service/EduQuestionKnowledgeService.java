@@ -1,5 +1,7 @@
 package top.criswjh.service;
 
+import java.util.List;
+import top.criswjh.entity.EduKnowledgePoint;
 import top.criswjh.entity.EduQuestionKnowledge;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -10,4 +12,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface EduQuestionKnowledgeService extends IService<EduQuestionKnowledge> {
 
+    /**
+     * 通过题库id查询关联知识点
+     *
+     * @param id 题库id
+     * @return
+     */
+    List<EduKnowledgePoint> listKnowledgeById(Long id);
 }

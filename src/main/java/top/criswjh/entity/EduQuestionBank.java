@@ -27,17 +27,12 @@ public class EduQuestionBank implements Serializable {
     private String title;
 
     /**
-     * 选择题的选项
-     */
-    private String option;
-
-    /**
      * 题目答案
      */
     private String answer;
 
     /**
-     * 题目类型：0单选，1多选，2天空，3主观
+     * 题目类型：0单选，1多选，2主观
      */
     private Integer type;
 

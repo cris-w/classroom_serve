@@ -7,7 +7,6 @@
   <resultMap id="BaseResultMap" type="top.criswjh.entity.EduQuestionBank">
     <id property="id" column="id" jdbcType="BIGINT"/>
     <result property="title" column="title" jdbcType="VARCHAR"/>
-    <result property="option" column="option" jdbcType="VARCHAR"/>
     <result property="answer" column="answer" jdbcType="VARCHAR"/>
     <result property="type" column="type" jdbcType="INTEGER"/>
     <result property="level" column="level" jdbcType="INTEGER"/>
@@ -16,8 +15,19 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    id,title,option,
-        answer,type,level
-        ,gmt_create,gmt_update
+    id,title,answer,type,level
   </sql>
+  <select id="listByType" resultType="top.criswjh.entity.EduQuestionBank">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM
+    edu_question_bank
+    <where>
+      type = #{type}
+      <if test="title != null">
+        AND title like CONCAT('%',#{title,jdbcType=VARCHAR},'%')
+      </if>
+    </where>
+  </select>
+
 </mapper>

@@ -13,4 +13,14 @@
     <sql id="Base_Column_List">
         id,question_id,knowledge_id
     </sql>
+  <select id="listQuestionById" resultType="top.criswjh.entity.EduKnowledgePoint">
+    SELECT
+      p.id,
+      p.title
+    FROM
+      edu_question_knowledge k
+        JOIN edu_knowledge_point p ON p.id = k.knowledge_id
+    WHERE
+      k.question_id = #{id}
+  </select>
 </mapper>

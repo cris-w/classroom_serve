@@ -1,5 +1,7 @@
 package top.criswjh.mapper;
 
+import java.util.List;
+import top.criswjh.entity.EduKnowledgePoint;
 import top.criswjh.entity.EduQuestionKnowledge;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
@@ -11,6 +13,13 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface EduQuestionKnowledgeMapper extends BaseMapper<EduQuestionKnowledge> {
 
+    /**
+     * 通过题库id查询知识点
+     *
+     * @param id 题目id
+     * @return
+     */
+    List<EduKnowledgePoint> listQuestionById(Long id);
 }
 
 

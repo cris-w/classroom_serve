@@ -75,7 +75,7 @@ public class EduKnowledgePointServiceImpl extends
     private List<KnowledgePointVo> buildTree(List<EduKnowledgePoint> points) {
         List<KnowledgePointVo> tree = new ArrayList<>();
         // 将 EduKnowledgePoint -> KnowledgePointVo
-        List<KnowledgePointVo> Vos = points.stream().map(c -> {
+        List<KnowledgePointVo> vos = points.stream().map(c -> {
             KnowledgePointVo v = new KnowledgePointVo();
             v.setId(c.getId());
             v.setTitle(c.getTitle());
@@ -83,9 +83,9 @@ public class EduKnowledgePointServiceImpl extends
             return v;
         }).collect(Collectors.toList());
 
-        Vos.forEach(point -> {
+        vos.forEach(point -> {
             // 获取所有parentID 为 当前ID的子集
-            List<KnowledgePointVo> child = Vos.stream()
+            List<KnowledgePointVo> child = vos.stream()
                     .filter(p -> point.getId().equals(p.getParentId()))
                     .collect(Collectors.toList());
 

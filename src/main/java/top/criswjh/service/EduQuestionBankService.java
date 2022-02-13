@@ -1,7 +1,9 @@
 package top.criswjh.service;
 
+import java.util.List;
 import top.criswjh.entity.EduQuestionBank;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.criswjh.entity.vo.exam.QuestionVo;
 
 /**
 * @author wjh
@@ -10,4 +12,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface EduQuestionBankService extends IService<EduQuestionBank> {
 
+    /**
+     * 获取所有类型的题
+     *
+     * @param type 0 单选 1 多选 2 主观
+     * @param title 标题
+     * @return
+     */
+    List<QuestionVo> listByType(Integer type, String title);
 }
