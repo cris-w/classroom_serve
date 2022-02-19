@@ -13,6 +13,13 @@
     <sql id="Base_Column_List">
         id,question_id,knowledge_id
     </sql>
+  <delete id="deleteByQuestionId">
+    DELETE
+    FROM
+      edu_question_knowledge
+    WHERE
+      question_id = #{id}
+  </delete>
   <select id="listQuestionById" resultType="top.criswjh.entity.EduKnowledgePoint">
     SELECT
       p.id,

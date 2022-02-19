@@ -1,14 +1,18 @@
 package top.criswjh.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.beans.BeanUtils;
+import org.springframework.transaction.annotation.Transactional;
 import top.criswjh.entity.EduKnowledgePoint;
 import top.criswjh.entity.EduQuestionBank;
+import top.criswjh.entity.EduQuestionKnowledge;
 import top.criswjh.entity.EduQuestionOption;
+import top.criswjh.entity.bo.edu.QuestionBo;
 import top.criswjh.entity.vo.exam.QuestionVo;
 import top.criswjh.service.EduQuestionBankService;
 import top.criswjh.mapper.EduQuestionBankMapper;
@@ -53,6 +57,62 @@ public class EduQuestionBankServiceImpl extends ServiceImpl<EduQuestionBankMappe
             questionVos.add(questionVo);
         });
         return questionVos;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteQuestionById(Long id) {
+        // 删除知识点关联表相关数据
+        questionKnowledgeService.deleteByQuestionId(id);
+        // 删除选项关联表相关数据
+        questionOptionService.deleteByQuestionId(id);
+        // 删除题库表数据
+        questionBankMapper.deleteById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void addQuestion(QuestionBo bo) {
+        // 插入题库表
+        EduQuestionBank eduQuestionBank = new EduQuestionBank();
+        BeanUtil.copyProperties(bo, eduQuestionBank);
+        questionBankMapper.insert(eduQuestionBank);
+        // 插入题目选项关联表
+        Long questionBankId = eduQuestionBank.getId();
+        List<String> options = bo.getOptions();
+        List<EduQuestionOption> eduQuestionOptions = new ArrayList<>();
+        options.forEach(option -> {
+            EduQuestionOption eduQuestionOption = new EduQuestionOption();
+            eduQuestionOption.setQuestionId(questionBankId);
+            eduQuestionOption.setOption(option);
+            eduQuestionOptions.add(eduQuestionOption);
+        });
+        questionOptionService.saveBatch(eduQuestionOptions);
+        // 插入题目知识点关联表
+        List<Long> knowledgePoints = bo.getKnowledgePoints();
+        List<EduQuestionKnowledge> knowledgeList = new ArrayList<>();
+        knowledgePoints.forEach(id -> {
+            EduQuestionKnowledge eduQuestionKnowledge = new EduQuestionKnowledge();
+            eduQuestionKnowledge.setQuestionId(questionBankId);
+            eduQuestionKnowledge.setKnowledgeId(id);
+            knowledgeList.add(eduQuestionKnowledge);
+        });
+        questionKnowledgeService.saveBatch(knowledgeList);
+    }
+
+    @Override
+    public QuestionVo getQuestionById(Long id) {
+        QuestionVo questionVo = new QuestionVo();
+        EduQuestionBank question = questionBankMapper.selectById(id);
+        if (question == null) {
+            return null;
+        }
+        BeanUtils.copyProperties(question, questionVo);
+        List<EduQuestionOption> options = questionOptionService.getByQuestionId(id);
+        questionVo.setOptions(options);
+        List<EduKnowledgePoint> knowledgeList = questionKnowledgeService.getByQuestionId(id);
+        questionVo.setKnowledgePoints(knowledgeList);
+        return questionVo;
     }
 }
 

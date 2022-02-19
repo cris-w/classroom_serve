@@ -1,10 +1,13 @@
 package top.criswjh.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.Resource;
 import top.criswjh.entity.EduKnowledgePoint;
 import top.criswjh.entity.EduQuestionKnowledge;
+import top.criswjh.service.EduKnowledgePointService;
 import top.criswjh.service.EduQuestionKnowledgeService;
 import top.criswjh.mapper.EduQuestionKnowledgeMapper;
 import org.springframework.stereotype.Service;
@@ -21,10 +24,31 @@ public class EduQuestionKnowledgeServiceImpl extends
 
     @Resource
     private EduQuestionKnowledgeMapper questionKnowledgeMapper;
+    @Resource
+    private EduKnowledgePointService knowledgePointService;
 
     @Override
     public List<EduKnowledgePoint> listKnowledgeById(Long id) {
         return questionKnowledgeMapper.listQuestionById(id);
+    }
+
+    @Override
+    public void deleteByQuestionId(Long id) {
+        questionKnowledgeMapper.deleteByQuestionId(id);
+    }
+
+    @Override
+    public List<EduKnowledgePoint> getByQuestionId(Long id) {
+        // 通过问题id 获取 知识点列表
+        List<EduQuestionKnowledge> knowledgeList = questionKnowledgeMapper.selectList(
+                new LambdaQueryWrapper<EduQuestionKnowledge>().eq(
+                        EduQuestionKnowledge::getQuestionId, id));
+        // 将知识点列表转为 知识点id列表
+        List<Long> ids = knowledgeList.stream().map(EduQuestionKnowledge::getKnowledgeId)
+                .collect(Collectors.toList());
+
+        List<EduKnowledgePoint> eduKnowledgePoints = knowledgePointService.listByIds(ids);
+        return eduKnowledgePoints;
     }
 }
 

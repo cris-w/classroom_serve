@@ -20,6 +20,13 @@ public interface EduQuestionKnowledgeMapper extends BaseMapper<EduQuestionKnowle
      * @return
      */
     List<EduKnowledgePoint> listQuestionById(Long id);
+
+    /**
+     * 通过题库id删除关联知识点
+     *
+     * @param id
+     */
+    void deleteByQuestionId(Long id);
 }
 
 

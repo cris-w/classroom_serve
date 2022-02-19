@@ -19,4 +19,20 @@ public interface EduQuestionKnowledgeService extends IService<EduQuestionKnowled
      * @return
      */
     List<EduKnowledgePoint> listKnowledgeById(Long id);
+
+    /**
+     * 通过题库id删除关联知识点信息
+     *
+     * @param id id
+     */
+    void deleteByQuestionId(Long id);
+
+    /**
+     * 通过问题id获取所有关联知识点
+     *
+     * @param id 问题id
+     * @return knowledgeList
+     */
+    List<EduKnowledgePoint> getByQuestionId(Long id);
+
 }
