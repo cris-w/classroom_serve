@@ -43,4 +43,11 @@ public interface EduQuestionBankService extends IService<EduQuestionBank> {
      * @return Vo
      */
     QuestionVo getQuestionById(Long id);
+
+    /**
+     * 修改
+     *
+     * @param bo
+     */
+    void updateQuestion(QuestionBo bo);
 }

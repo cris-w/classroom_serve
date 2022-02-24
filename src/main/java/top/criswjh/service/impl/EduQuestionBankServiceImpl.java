@@ -1,6 +1,7 @@
 package top.criswjh.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.ArrayList;
@@ -52,7 +53,8 @@ public class EduQuestionBankServiceImpl extends ServiceImpl<EduQuestionBankMappe
                             questionVo.getId()));
             questionVo.setOptions(options);
             // 查询本题的关联知识点
-            List<EduKnowledgePoint> points = questionKnowledgeService.listKnowledgeById(question.getId());
+            List<EduKnowledgePoint> points = questionKnowledgeService.listKnowledgeById(
+                    question.getId());
             questionVo.setKnowledgePoints(points);
             questionVos.add(questionVo);
         });
@@ -76,28 +78,13 @@ public class EduQuestionBankServiceImpl extends ServiceImpl<EduQuestionBankMappe
         // 插入题库表
         EduQuestionBank eduQuestionBank = new EduQuestionBank();
         BeanUtil.copyProperties(bo, eduQuestionBank);
+        eduQuestionBank.setGmtCreate(DateUtil.date());
         questionBankMapper.insert(eduQuestionBank);
         // 插入题目选项关联表
         Long questionBankId = eduQuestionBank.getId();
-        List<String> options = bo.getOptions();
-        List<EduQuestionOption> eduQuestionOptions = new ArrayList<>();
-        options.forEach(option -> {
-            EduQuestionOption eduQuestionOption = new EduQuestionOption();
-            eduQuestionOption.setQuestionId(questionBankId);
-            eduQuestionOption.setOption(option);
-            eduQuestionOptions.add(eduQuestionOption);
-        });
-        questionOptionService.saveBatch(eduQuestionOptions);
+        this.insertOptions(bo, questionBankId);
         // 插入题目知识点关联表
-        List<Long> knowledgePoints = bo.getKnowledgePoints();
-        List<EduQuestionKnowledge> knowledgeList = new ArrayList<>();
-        knowledgePoints.forEach(id -> {
-            EduQuestionKnowledge eduQuestionKnowledge = new EduQuestionKnowledge();
-            eduQuestionKnowledge.setQuestionId(questionBankId);
-            eduQuestionKnowledge.setKnowledgeId(id);
-            knowledgeList.add(eduQuestionKnowledge);
-        });
-        questionKnowledgeService.saveBatch(knowledgeList);
+        insertKnowledgePoints(bo, questionBankId);
     }
 
     @Override
@@ -113,6 +100,69 @@ public class EduQuestionBankServiceImpl extends ServiceImpl<EduQuestionBankMappe
         List<EduKnowledgePoint> knowledgeList = questionKnowledgeService.getByQuestionId(id);
         questionVo.setKnowledgePoints(knowledgeList);
         return questionVo;
+    }
+
+    @Override
+    public void updateQuestion(QuestionBo bo) {
+        // 修改题库表数据
+        EduQuestionBank questionBank = new EduQuestionBank();
+        questionBank.setGmtUpdate(DateUtil.date());
+        BeanUtils.copyProperties(bo, questionBank);
+        questionBankMapper.updateById(questionBank);
+        // 修改问题选项表
+        // 1. 删除原来的选项
+        questionOptionService.deleteByQuestionId(bo.getId());
+        // 2. 插入新选项
+        insertOptions(bo, bo.getId());
+        // 修改问题知识点关联表
+        // 1. 删除原来的知识点
+        questionKnowledgeService.deleteByQuestionId(bo.getId());
+        // 2. 插入新的知识点
+        this.insertKnowledgePoints(bo, bo.getId());
+    }
+
+    /**
+     * 插入选项
+     *
+     * @param bo QuestionBo
+     * @param id questionId
+     */
+    public void insertOptions(QuestionBo bo, Long id) {
+        List<String> options = bo.getOptions();
+        // 如果选项为空 则直接跳出
+        if (options == null) {
+            return;
+        }
+        List<EduQuestionOption> eduQuestionOptions = new ArrayList<>();
+        options.forEach(option -> {
+            EduQuestionOption eduQuestionOption = new EduQuestionOption();
+            eduQuestionOption.setQuestionId(id);
+            eduQuestionOption.setOption(option);
+            eduQuestionOptions.add(eduQuestionOption);
+        });
+        questionOptionService.saveBatch(eduQuestionOptions);
+    }
+
+    /**
+     * 插入知识点
+     *
+     * @param bo
+     * @param id
+     */
+    public void insertKnowledgePoints(QuestionBo bo, Long id) {
+        List<Long> knowledgePoints = bo.getKnowledgePoints();
+        // 如果知识点为空，则直接返回
+        if( knowledgePoints == null) {
+            return;
+        }
+        List<EduQuestionKnowledge> knowledgeList = new ArrayList<>();
+        knowledgePoints.forEach(pointsId -> {
+            EduQuestionKnowledge eduQuestionKnowledge = new EduQuestionKnowledge();
+            eduQuestionKnowledge.setQuestionId(id);
+            eduQuestionKnowledge.setKnowledgeId(pointsId);
+            knowledgeList.add(eduQuestionKnowledge);
+        });
+        questionKnowledgeService.saveBatch(knowledgeList);
     }
 }
 

@@ -1,18 +1,15 @@
 package top.criswjh;
 
+import cn.hutool.core.date.DateTime;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import java.util.Date;
 import javax.annotation.Resource;
 import org.junit.jupiter.api.Test;
-import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import top.criswjh.entity.SysUser;
-import top.criswjh.entity.Users;
 import top.criswjh.mapper.SysUserMapper;
-import top.criswjh.mapper.UsersMapper;
 
 @SpringBootTest
-@MapperScan("top.criswjh.mapper")
 class ClassroomServeApplicationTests {
     @Resource
     private SysUserMapper mapper;
@@ -20,7 +17,10 @@ class ClassroomServeApplicationTests {
     @Test
     public void test() {
         LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
-        System.out.println(mapper.selectOne(wrapper.eq(SysUser::getUsername, "admin")).getPassword());
+        Date admin = mapper.selectOne(wrapper.eq(SysUser::getUsername, "admin")).getCreated();
+        DateTime dateTime = new DateTime(admin);
+        System.out.println(admin);
+        System.out.println(dateTime);
     }
 
 }

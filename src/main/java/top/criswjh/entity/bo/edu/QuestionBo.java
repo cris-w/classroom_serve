@@ -11,6 +11,11 @@ import lombok.Data;
 public class QuestionBo {
 
     /**
+     * id
+     */
+    private Long id;
+
+    /**
      * 题目描述
      */
     private String title;

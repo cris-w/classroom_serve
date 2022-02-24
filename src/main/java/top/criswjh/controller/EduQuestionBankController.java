@@ -31,6 +31,8 @@ public class EduQuestionBankController extends BaseController {
      * 包括 知识点、选项
      *
      * @param type 0 单选 1 多选 2 简答
+     * @param title 标题
+     *
      * @return list
      */
     @GetMapping("/list")
@@ -45,8 +47,8 @@ public class EduQuestionBankController extends BaseController {
      * 通过id获取问题
      * 包括 题目 选项 关联知识点
      *
-     * @param id
-     * @return
+     * @param id 题目id
+     * @return vo
      */
     @GetMapping("/getQuestionById/{id}")
     public AjaxResult<QuestionVo> getQuestionById(@PathVariable Long id) {
@@ -59,8 +61,8 @@ public class EduQuestionBankController extends BaseController {
     /**
      * 创建题库问题
      *
-     * @param bo
-     * @return
+     * @param bo bo
+     * @return ok
      */
     @PostMapping("/addQuestion")
     public AjaxResult<Void> addQuestion(@RequestBody QuestionBo bo) {
@@ -74,13 +76,26 @@ public class EduQuestionBankController extends BaseController {
      * 通过id删除题目数据
      * 包括 知识点表 选项表 题库表
      *
-     * @param id
-     * @return
+     * @param id 题目id
+     * @return ok
      */
     @GetMapping("/delete/{id}")
     public AjaxResult<Void> delete(@PathVariable Long id) {
         questionBankService.deleteQuestionById(id);
 
         return AjaxResult.success("删除成功");
+    }
+
+    /**
+     * 修改题目
+     *
+     * @param bo bo
+     * @return ok
+     */
+    @PostMapping("/update")
+    public AjaxResult<Void> update(@RequestBody QuestionBo bo) {
+        questionBankService.updateQuestion(bo);
+
+        return AjaxResult.success("修改成功");
     }
 }

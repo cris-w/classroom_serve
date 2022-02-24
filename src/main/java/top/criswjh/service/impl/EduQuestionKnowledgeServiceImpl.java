@@ -43,6 +43,9 @@ public class EduQuestionKnowledgeServiceImpl extends
         List<EduQuestionKnowledge> knowledgeList = questionKnowledgeMapper.selectList(
                 new LambdaQueryWrapper<EduQuestionKnowledge>().eq(
                         EduQuestionKnowledge::getQuestionId, id));
+        if(knowledgeList.size() == 0) {
+            return null;
+        }
         // 将知识点列表转为 知识点id列表
         List<Long> ids = knowledgeList.stream().map(EduQuestionKnowledge::getKnowledgeId)
                 .collect(Collectors.toList());
