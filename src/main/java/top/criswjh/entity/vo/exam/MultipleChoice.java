@@ -6,18 +6,13 @@ import top.criswjh.entity.EduKnowledgePoint;
 import top.criswjh.entity.EduQuestionOption;
 
 /**
- * 用于题库
+ * 用于试卷中 单选/多选 的题目展示
  *
  * @author wjh
- * @date 2022/2/11 9:31 PM
+ * @date 2022/2/26 8:08 PM
  */
 @Data
-public class QuestionVo {
-
-    /**
-     * 题库唯一标识
-     */
-    private Long id;
+public class MultipleChoice {
 
     /**
      * 题目描述
@@ -35,9 +30,9 @@ public class QuestionVo {
     private Integer type;
 
     /**
-     * 题目等级：0简单，1中等，2困难
+     * 分值
      */
-    private Integer level;
+    private Integer score;
 
     /**
      * 选项

@@ -2,12 +2,18 @@ package top.criswjh.service;
 
 import top.criswjh.entity.EduExamPaper;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.criswjh.entity.vo.exam.PaperVo;
 
 /**
 * @author wjh
-* @description 针对表【edu_exam_paper(考试-试卷表)】的数据库操作Service
-* @createDate 2022-01-22 23:41:11
 */
 public interface EduExamPaperService extends IService<EduExamPaper> {
 
+    /**
+     * 通过试卷id获取问题列表
+     *
+     * @param id
+     * @return
+     */
+    PaperVo getQuestionListById(Long id);
 }

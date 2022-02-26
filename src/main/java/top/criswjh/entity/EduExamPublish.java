@@ -9,53 +9,48 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 考试-试卷表
+ * 发布考试表
  * @author wjh
- * @TableName edu_exam_paper
+ * @TableName edu_exam_publish
  */
-@TableName(value ="edu_exam_paper")
+@TableName(value ="edu_exam_publish")
 @Data
-public class EduExamPaper implements Serializable {
+public class EduExamPublish implements Serializable {
     /**
-     * 试卷唯一标识
+     * id
      */
     @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
-     * 老师姓名
+     * 试卷id
      */
-    private String teacherName;
-
-    /**
-     * 课程id
-     */
-    private Long courseId;
+    private Long paperId;
 
     /**
      * 试卷标题
      */
-    private String title;
+    private String paperTitle;
 
     /**
-     * 试卷描述
+     * 班级id
      */
-    private String description;
+    private Long classId;
 
     /**
-     * 试卷总分
+     * 限制时间：分钟
      */
-    private Integer totalScore;
+    private Integer timeLimit;
 
     /**
-     * 创建时间
+     * 开始时间
      */
-    private Date gmtCreate;
+    private Date timeStart;
 
     /**
-     * 更新时间
+     * 结束时间
      */
-    private Date gmtUpdate;
+    private Date timeEnd;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

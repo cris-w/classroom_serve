@@ -95,8 +95,11 @@ public class EduQuestionBankServiceImpl extends ServiceImpl<EduQuestionBankMappe
             return null;
         }
         BeanUtils.copyProperties(question, questionVo);
-        List<EduQuestionOption> options = questionOptionService.getByQuestionId(id);
-        questionVo.setOptions(options);
+        // 如果题目类型为 2 主观题，则不需要查询选项
+        if (questionVo.getType() != 2) {
+            List<EduQuestionOption> options = questionOptionService.getByQuestionId(id);
+            questionVo.setOptions(options);
+        }
         List<EduKnowledgePoint> knowledgeList = questionKnowledgeService.getByQuestionId(id);
         questionVo.setKnowledgePoints(knowledgeList);
         return questionVo;
