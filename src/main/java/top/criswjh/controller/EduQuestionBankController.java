@@ -1,5 +1,6 @@
 package top.criswjh.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.swagger.annotations.Api;
 import java.util.List;
 import javax.annotation.Resource;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.criswjh.common.lang.AjaxResult;
+import top.criswjh.entity.EduQuestionBank;
 import top.criswjh.entity.bo.edu.QuestionBo;
 import top.criswjh.entity.vo.exam.QuestionVo;
 import top.criswjh.service.EduQuestionBankService;
@@ -41,6 +43,20 @@ public class EduQuestionBankController extends BaseController {
         List<QuestionVo> eduQuestionBanks = questionBankService.listByType(type, title);
 
         return AjaxResult.success(eduQuestionBanks);
+    }
+
+    /**
+     * 获取题目的简要信息，
+     * 创建试卷时使用
+     *
+     * @param title 0 单选 1 多选 2 简答
+     * @param type 标题
+     * @return list
+     */
+    @GetMapping("/listBrief")
+    public AjaxResult<List<EduQuestionBank>> listBrief(String title, Integer type) {
+        List<EduQuestionBank> list = questionBankService.listBrief(type, title);
+        return AjaxResult.success(list);
     }
 
     /**

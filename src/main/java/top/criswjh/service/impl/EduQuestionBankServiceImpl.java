@@ -124,6 +124,11 @@ public class EduQuestionBankServiceImpl extends ServiceImpl<EduQuestionBankMappe
         this.insertKnowledgePoints(bo, bo.getId());
     }
 
+    @Override
+    public List<EduQuestionBank> listBrief(Integer type, String title) {
+        return questionBankMapper.listByType(type, title);
+    }
+
     /**
      * 插入选项
      *

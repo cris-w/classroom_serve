@@ -50,4 +50,13 @@ public interface EduQuestionBankService extends IService<EduQuestionBank> {
      * @param bo
      */
     void updateQuestion(QuestionBo bo);
+
+    /**
+     * 获取题目简要信息
+     *
+     * @param type 0 单选 1 多选 2 主观
+     * @param title 标题
+     * @return list
+     */
+    List<EduQuestionBank> listBrief(Integer type, String title);
 }

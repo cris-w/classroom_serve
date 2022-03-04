@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.criswjh.common.lang.AjaxResult;
 import top.criswjh.entity.EduExamPaper;
+import top.criswjh.entity.bo.edu.PaperBo;
 import top.criswjh.entity.vo.exam.PaperVo;
 import top.criswjh.service.EduExamPaperService;
 
@@ -57,12 +58,12 @@ public class EduExamPaperController {
     /**
      * 创建试卷
      *
-     * @param paper paper
+     * @param paperBo paper
      * @return ok
      */
     @PostMapping("/save")
-    public AjaxResult<Void> save(@RequestBody EduExamPaper paper) {
-        examPaperService.save(paper);
+    public AjaxResult<Void> save(@RequestBody PaperBo paperBo) {
+        examPaperService.createPaper(paperBo);
         return AjaxResult.success("创建成功");
     }
 

@@ -15,7 +15,7 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    id,title,answer,type,level
+    id,title,answer,type,level,gmt_create
   </sql>
   <select id="listByType" resultType="top.criswjh.entity.EduQuestionBank">
     SELECT
