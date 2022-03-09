@@ -24,4 +24,6 @@ public interface EduExamPaperService extends IService<EduExamPaper> {
      * @param paperBo bo
      */
     void createPaper(PaperBo paperBo);
+
+
 }

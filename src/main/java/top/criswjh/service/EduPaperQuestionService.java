@@ -1,5 +1,6 @@
 package top.criswjh.service;
 
+import java.util.List;
 import top.criswjh.entity.EduPaperQuestion;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -9,5 +10,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2022-01-22 23:41:11
 */
 public interface EduPaperQuestionService extends IService<EduPaperQuestion> {
+
+    /**
+     * 通过题目Id 删除关联试卷信息
+     *
+     * @param ids
+     * @return
+     */
+    Integer removeByPaperIds(List<Long> ids);
 
 }

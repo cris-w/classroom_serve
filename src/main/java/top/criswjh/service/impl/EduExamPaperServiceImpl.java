@@ -2,6 +2,7 @@ package top.criswjh.service.impl;
 
 import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
 import top.criswjh.entity.EduExamPaper;
+import top.criswjh.entity.EduExamPublish;
 import top.criswjh.entity.EduPaperQuestion;
+import top.criswjh.entity.bo.edu.ExamPublishBo;
 import top.criswjh.entity.bo.edu.PaperBo;
 import top.criswjh.entity.bo.edu.PaperQuestion;
 import top.criswjh.entity.vo.exam.Completion;

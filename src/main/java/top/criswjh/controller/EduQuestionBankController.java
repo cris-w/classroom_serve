@@ -1,6 +1,5 @@
 package top.criswjh.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.swagger.annotations.Api;
 import java.util.List;
 import javax.annotation.Resource;
@@ -46,7 +45,18 @@ public class EduQuestionBankController extends BaseController {
     }
 
     /**
-     * 获取题目的简要信息，
+     * 获取所有题目信息
+     *
+     * @return list
+     */
+    @GetMapping("/getAll")
+    public AjaxResult<List<EduQuestionBank>> list() {
+        List<EduQuestionBank> list = questionBankService.list();
+        return AjaxResult.success(list);
+    }
+
+    /**
+     * 获取题目的简要信息，包括知识点
      * 创建试卷时使用
      *
      * @param title 0 单选 1 多选 2 简答

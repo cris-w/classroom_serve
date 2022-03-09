@@ -14,9 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.criswjh.common.lang.AjaxResult;
 import top.criswjh.entity.EduExamPaper;
+import top.criswjh.entity.bo.edu.ExamPublishBo;
 import top.criswjh.entity.bo.edu.PaperBo;
+import top.criswjh.entity.vo.exam.ExamPublishVo;
 import top.criswjh.entity.vo.exam.PaperVo;
 import top.criswjh.service.EduExamPaperService;
+import top.criswjh.service.EduExamPublishService;
+import top.criswjh.service.EduPaperQuestionService;
 
 /**
  * @author wjh
@@ -29,6 +33,10 @@ public class EduExamPaperController {
 
     @Resource
     private EduExamPaperService examPaperService;
+    @Resource
+    private EduPaperQuestionService paperQuestionService;
+    @Resource
+    private EduExamPublishService eduExamPublishService;
 
     /**
      * 获取所有试卷（模糊查询）
@@ -75,8 +83,41 @@ public class EduExamPaperController {
      */
     @DeleteMapping("/delete")
     public AjaxResult<List<Long>> delete(@RequestBody List<Long> ids) {
+        // 删除试卷信息
         examPaperService.removeByIds(ids);
+        // 删除试卷题目信息
+        paperQuestionService.removeByPaperIds(ids);
+
         return AjaxResult.success("删除成功", ids);
+    }
+
+    /**
+     * 发布试卷
+     *
+     * @param bo bo
+     * @return ok
+     */
+    @PostMapping("/publishExam")
+    public AjaxResult<Void> publishExam(@RequestBody ExamPublishBo bo) {
+
+        if (eduExamPublishService.saveExam(bo)) {
+            return AjaxResult.success("发布成功");
+        }
+        return AjaxResult.error("发布失败");
+    }
+
+    /**
+     * 获取发布试卷信息
+     *
+     * @param title
+     * @param classId
+     * @return
+     */
+    @GetMapping("/listPublishExam")
+    public AjaxResult<List<ExamPublishVo>> listPublishExam(String title, Long classId) {
+        List<ExamPublishVo> list = eduExamPublishService.listPublishVo(title, classId);
+
+        return AjaxResult.success(list);
     }
 
 }

@@ -1,7 +1,10 @@
 package top.criswjh.service;
 
+import java.util.List;
 import top.criswjh.entity.EduExamPublish;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.criswjh.entity.bo.edu.ExamPublishBo;
+import top.criswjh.entity.vo.exam.ExamPublishVo;
 
 /**
 * @author wjh
@@ -10,4 +13,20 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface EduExamPublishService extends IService<EduExamPublish> {
 
+    /**
+     * 发布试卷
+     *
+     * @param bo
+     * @return
+     */
+    Boolean saveExam(ExamPublishBo bo);
+
+    /**
+     * 获取发布试卷信息
+     *
+     * @param title
+     * @param classId
+     * @return
+     */
+    List<ExamPublishVo> listPublishVo(String title, Long classId);
 }
