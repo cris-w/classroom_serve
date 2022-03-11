@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.criswjh.common.lang.AjaxResult;
 import top.criswjh.entity.EduChapter;
+import top.criswjh.entity.EduStudentVideo;
 import top.criswjh.entity.vo.course.ChapterVo;
 import top.criswjh.service.EduChapterService;
+import top.criswjh.service.EduStudentVideoService;
 
 /**
  * @author wjh
@@ -26,6 +28,38 @@ public class EduChapterController {
 
     @Resource
     private EduChapterService eduChapterService;
+    @Resource
+    private EduStudentVideoService studentVideoService;
+
+
+    /**
+     * 判断是否存在观看记录
+     * 存在则不插入 不存在则插入
+     *
+     * @param studentVideo
+     * @return
+     */
+    @PostMapping("/saveStudentVideo")
+    public AjaxResult<Void> saveStudentVideo(@RequestBody EduStudentVideo studentVideo) {
+        boolean b = studentVideoService.saveWhenNotExist(studentVideo);
+        if (b) {
+            return AjaxResult.success("插入成功");
+        }
+        return AjaxResult.success("已经观看");
+    }
+
+    /**
+     * 通过学生ID 和 课程ID 查询学生已经观看的 视屏ID
+     *
+     * @param studentId
+     * @param courseId
+     * @return
+     */
+    @GetMapping("/listStudentVideo")
+    public AjaxResult<List<Long>> listStudentVideo(Long studentId, Long courseId) {
+        List<Long> list = studentVideoService.listStudentVideo(studentId, courseId);
+        return AjaxResult.success(list);
+    }
 
     /**
      * 根据课程Id查询章节和对应的小节信息

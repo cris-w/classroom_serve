@@ -34,7 +34,7 @@ public class EduChapterServiceImpl extends ServiceImpl<EduChapterMapper, EduChap
         LambdaQueryWrapper<EduChapter> chapterWrapper = new LambdaQueryWrapper<>();
         List<EduChapter> eduChapterList = eduChapterMapper.selectList(
                 chapterWrapper.eq(EduChapter::getCourseId, courseId).orderByAsc(EduChapter::getSort));
-        // 根据ID 查询所有小节
+        // 根据课程ID 查询所有小节
         LambdaQueryWrapper<EduVideo> videoWrapper = new LambdaQueryWrapper<>();
         List<EduVideo> eduVideoList = eduVideoService.list(
                 videoWrapper.eq(EduVideo::getCourseId, courseId).orderByAsc(EduVideo::getSort));

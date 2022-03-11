@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.criswjh.mapper.EduStudentVideoMapper">
+
+  <resultMap id="BaseResultMap" type="top.criswjh.entity.EduStudentVideo">
+    <id property="id" column="id" jdbcType="BIGINT"/>
+    <result property="studentId" column="student_id" jdbcType="BIGINT"/>
+    <result property="videoId" column="video_id" jdbcType="BIGINT"/>
+    <result property="courseId" column="course_id" jdbcType="BIGINT"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id,student_id,video_id,
+        course_id
+  </sql>
+  <select id="selectStudentVideoList" resultType="java.lang.Long">
+    select video_id
+    from edu_student_video
+    where student_id = #{studentId}
+      and course_id = #{courseId}
+  </select>
+  <select id="selectExist" resultType="java.lang.Integer">
+    select count(id)
+    from edu_student_video
+    where student_id = #{studentId}
+      and course_id = #{courseId}
+      and video_id = #{videoId}
+  </select>
+</mapper>

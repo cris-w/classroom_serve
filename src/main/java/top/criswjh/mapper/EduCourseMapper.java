@@ -5,6 +5,7 @@ import top.criswjh.entity.EduCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import top.criswjh.entity.vo.CoursePublishVo;
 import top.criswjh.entity.vo.course.CourseInfoVo;
+import top.criswjh.entity.vo.course.CourseVo;
 
 /**
 * @author wjh
@@ -33,6 +34,14 @@ public interface EduCourseMapper extends BaseMapper<EduCourse> {
      * @return
      */
     List<EduCourse> getHotList();
+
+    /**
+     * 通过班级id 查询所有的课程
+     *
+     * @param classId
+     * @return
+     */
+    List<CourseVo> getCourseByClassId(Long classId);
 }
 
 

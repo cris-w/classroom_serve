@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import top.criswjh.entity.bo.edu.CourseInfoBo;
 import top.criswjh.entity.vo.CoursePublishVo;
 import top.criswjh.entity.vo.course.CourseInfoVo;
+import top.criswjh.entity.vo.course.CourseVo;
 
 /**
 * @author wjh
@@ -57,4 +58,12 @@ public interface EduCourseService extends IService<EduCourse> {
      * @return list
      */
     List<EduCourse> getHotList();
+
+    /**
+     * 通过班级id 获取课程信息
+     *
+     * @param classId
+     * @return
+     */
+    List<CourseVo> listByClassId(Long classId);
 }

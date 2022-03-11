@@ -15,6 +15,7 @@ import top.criswjh.entity.EduCourseDescription;
 import top.criswjh.entity.bo.edu.CourseInfoBo;
 import top.criswjh.entity.vo.CoursePublishVo;
 import top.criswjh.entity.vo.course.CourseInfoVo;
+import top.criswjh.entity.vo.course.CourseVo;
 import top.criswjh.service.EduChapterService;
 import top.criswjh.service.EduCourseDescriptionService;
 import top.criswjh.service.EduCourseService;
@@ -116,6 +117,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     @Cacheable(value = "hotCourseList")
     public List<EduCourse> getHotList() {
         return eduCourseMapper.getHotList();
+    }
+
+    @Override
+    public List<CourseVo> listByClassId(Long classId) {
+
+        return eduCourseMapper.getCourseByClassId(classId);
     }
 }
 

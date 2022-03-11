@@ -56,4 +56,11 @@
     order by join_count desc
     limit 8
   </select>
+  <select id="getCourseByClassId" resultType="top.criswjh.entity.vo.course.CourseVo">
+    SELECT c.id, c.cover, c.title, c.status, u.username as teacher_name, ec.title as class_name
+    from edu_course c
+           join sys_user u on c.teacher_id = u.id
+           join edu_class ec on c.class_id = ec.id
+    where c.class_id = #{classId}
+  </select>
 </mapper>

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ import top.criswjh.entity.bo.edu.CourseInfoBo;
 import top.criswjh.entity.vo.CoursePublishVo;
 import top.criswjh.entity.vo.TeacherVo;
 import top.criswjh.entity.vo.course.CourseInfoVo;
+import top.criswjh.entity.vo.course.CourseVo;
 
 /**
  * @author wjh
@@ -29,12 +31,10 @@ import top.criswjh.entity.vo.course.CourseInfoVo;
 @Api(tags = "课程管理模块")
 @RestController
 @RequestMapping("/edu/course")
-public class EduCourseController extends BaseController{
+public class EduCourseController extends BaseController {
 
     /**
-     * 查询热门课程和名师接口
-     * （查询参加人数前八的课程，以及前id前四的教师）
-     * 学生端使用
+     * 查询热门课程和名师接口 （查询参加人数前八的课程，以及前id前四的教师） 学生端使用
      *
      * @return list
      */
@@ -51,9 +51,26 @@ public class EduCourseController extends BaseController{
     }
 
     /**
+     * 通过班级Id查询 已发布的课程列表
+     *
+     * @param classId 班级Id
+     * @return list
+     */
+    @GetMapping("/getCourseByClassId/{classId}")
+    public AjaxResult<List<CourseVo>> getCourseByClassId(@PathVariable Long classId) {
+//        List<EduCourse> list = eduCourseService.list(new LambdaQueryWrapper<EduCourse>().eq(
+//                EduCourse::getClassId, classId));
+        List<CourseVo> list = eduCourseService.listByClassId(classId);
+        List<CourseVo> res = list.stream().filter(l -> l.getStatus().equals(Const.STATUS_ON))
+                .collect(Collectors.toList());
+        return AjaxResult.success(res);
+    }
+
+
+    /**
      * 模糊查询：通过课程名查询课程列表
      *
-     * @param title
+     * @param title title
      * @return
      */
     @GetMapping("/list")
@@ -106,8 +123,7 @@ public class EduCourseController extends BaseController{
     }
 
     /**
-     * 删除课程信息：
-     *   包括：课程信息、课程描述信息、章节信息、小节信息
+     * 删除课程信息： 包括：课程信息、课程描述信息、章节信息、小节信息
      *
      * @param courseId
      * @return
@@ -131,8 +147,7 @@ public class EduCourseController extends BaseController{
     }
 
     /**
-     * 发布课程：
-     * 设置课程状态为 1
+     * 发布课程： 设置课程状态为 1
      *
      * @param courseId
      * @return

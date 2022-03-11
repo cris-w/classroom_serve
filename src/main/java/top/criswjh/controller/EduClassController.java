@@ -1,12 +1,10 @@
 package top.criswjh.controller;
 
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import java.util.List;
-import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.criswjh.common.lang.AjaxResult;
 import top.criswjh.entity.EduClass;
-import top.criswjh.entity.EduCourse;
-import top.criswjh.service.EduClassService;
 
 /**
  * @author wjh
@@ -106,6 +102,4 @@ public class EduClassController extends BaseController {
         eduClassService.removeById(id);
         return AjaxResult.success("删除成功", id);
     }
-
-
 }
