@@ -14,6 +14,11 @@ import top.criswjh.entity.EduKnowledgePoint;
 public class Completion {
 
     /**
+     * 题目ID
+     */
+    private Long id;
+
+    /**
      * 题目描述
      */
     private String title;

@@ -14,13 +14,13 @@ import top.criswjh.mapper.EduExamPublishMapper;
 import org.springframework.stereotype.Service;
 
 /**
-* @author wjh
-* @description 针对表【edu_exam_publish(发布考试表)】的数据库操作Service实现
-* @createDate 2022-02-26 15:16:38
-*/
+ * @author wjh
+ * @description 针对表【edu_exam_publish(发布考试表)】的数据库操作Service实现
+ * @createDate 2022-02-26 15:16:38
+ */
 @Service
 public class EduExamPublishServiceImpl extends ServiceImpl<EduExamPublishMapper, EduExamPublish>
-    implements EduExamPublishService {
+        implements EduExamPublishService {
 
     @Resource
     private EduExamPublishMapper examPublishMapper;
@@ -44,7 +44,10 @@ public class EduExamPublishServiceImpl extends ServiceImpl<EduExamPublishMapper,
     @Override
     public List<ExamPublishVo> listPublishVo(String title, Long classId) {
 
-        return examPublishMapper.selectPublishVo(title.trim(), classId);
+        if (title != null) {
+            return examPublishMapper.selectPublishVo(title.trim(), classId);
+        }
+        return examPublishMapper.selectPublishVo(null, classId);
     }
 }
 

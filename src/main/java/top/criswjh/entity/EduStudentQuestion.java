@@ -26,9 +26,14 @@ public class EduStudentQuestion implements Serializable {
     private Long studentId;
 
     /**
-     * 试卷-题目关联表ID
+     * 题目ID
      */
-    private Long paperQuestionId;
+    private Long questionId;
+
+    /**
+     * 试卷ID
+     */
+    private Long paperId;
 
     /**
      * 学生答案

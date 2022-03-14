@@ -2,6 +2,7 @@ package top.criswjh.service;
 
 import top.criswjh.entity.EduStudentExam;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.criswjh.entity.bo.edu.StudentPaperBo;
 
 /**
 * @author wjh
@@ -10,4 +11,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface EduStudentExamService extends IService<EduStudentExam> {
 
+    /**
+     * 新增学生考试记录
+     *
+     * @param bo bo
+     * @return true 操作成功 false 操作失败
+     */
+    Boolean savePaper(StudentPaperBo bo);
 }

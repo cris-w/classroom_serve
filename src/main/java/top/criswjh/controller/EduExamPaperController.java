@@ -120,4 +120,17 @@ public class EduExamPaperController {
         return AjaxResult.success(list);
     }
 
+    /**
+     * 通过id删除发布试卷信息
+     *
+     * @param id id
+     * @return
+     */
+    @GetMapping("/deletePublish/{id}")
+    public AjaxResult<Void> deletePublish(@PathVariable Long id) {
+        // TODO 此处还需要删除学生考试记录
+        eduExamPublishService.removeById(id);
+        return AjaxResult.success("删除成功");
+    }
+
 }

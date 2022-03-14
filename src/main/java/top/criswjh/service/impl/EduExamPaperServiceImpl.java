@@ -67,6 +67,7 @@ public class EduExamPaperServiceImpl extends ServiceImpl<EduExamPaperMapper, Edu
 
                 QuestionVo questionVo = questionBankService.getQuestionById(
                         question.getQuestionId());
+                choice.setId(question.getQuestionId());
                 choice.setTitle(questionVo.getTitle());
                 choice.setAnswer(questionVo.getAnswer());
                 choice.setOptions(questionVo.getOptions());
@@ -80,6 +81,7 @@ public class EduExamPaperServiceImpl extends ServiceImpl<EduExamPaperMapper, Edu
 
                 QuestionVo questionVo = questionBankService.getQuestionById(
                         question.getQuestionId());
+                completion.setId(question.getQuestionId());
                 completion.setTitle(questionVo.getTitle());
                 completion.setAnswer(questionVo.getAnswer());
                 completion.setKnowledgePoints(questionVo.getKnowledgePoints());

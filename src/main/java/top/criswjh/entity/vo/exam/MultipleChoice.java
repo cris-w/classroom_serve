@@ -15,6 +15,11 @@ import top.criswjh.entity.EduQuestionOption;
 public class MultipleChoice {
 
     /**
+     * 题目ID
+     */
+    private Long id;
+
+    /**
      * 题目描述
      */
     private String title;

@@ -31,7 +31,7 @@ public class EduStudentExam implements Serializable {
     private Long studentId;
 
     /**
-     * 状态：0未完成、1已完成、2已过期
+     * 状态：0未完成、1已完成
      */
     private Integer state;
 
