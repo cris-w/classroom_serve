@@ -21,7 +21,8 @@
   </sql>
   <select id="selectPublishVo" resultType="top.criswjh.entity.vo.exam.ExamPublishVo">
     SELECT
-    p.id,p.paper_id,p.paper_title,p.time_end,p.time_limit,p.time_start,c.title as class_name
+    p.id,p.paper_id,p.paper_title, p.class_id,p.time_end,p.time_limit,p.time_start,c.title as
+    class_name
     FROM
     edu_exam_publish p
     JOIN edu_class c ON p.class_id = c.id

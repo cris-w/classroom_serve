@@ -24,6 +24,11 @@ public class StudentPaperBo {
     private Long studentId;
 
     /**
+     * 班级ID
+     */
+    private Long classId;
+
+    /**
      * 得分
      */
     private Integer score;

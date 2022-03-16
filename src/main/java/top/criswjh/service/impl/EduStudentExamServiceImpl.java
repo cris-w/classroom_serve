@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import top.criswjh.entity.EduStudentExam;
 import top.criswjh.entity.EduStudentQuestion;
 import top.criswjh.entity.bo.edu.StudentPaperBo;
+import top.criswjh.entity.vo.exam.StudentExamVo;
 import top.criswjh.service.EduStudentExamService;
 import top.criswjh.mapper.EduStudentExamMapper;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,12 @@ public class EduStudentExamServiceImpl extends ServiceImpl<EduStudentExamMapper,
         List<EduStudentQuestion> list = bo.getQuestionList();
         boolean b = eduStudentQuestionService.saveBatch(list, list.size());
         return i > 0 && b;
+    }
+
+    @Override
+    public List<StudentExamVo> listExamById(Long paperId, Long classId) {
+
+        return eduStudentExamMapper.selectExamById(paperId, classId);
     }
 }
 

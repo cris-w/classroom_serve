@@ -36,6 +36,16 @@ public class EduStudentQuestion implements Serializable {
     private Long paperId;
 
     /**
+     * 总分
+     */
+    private Integer totalScore;
+
+    /**
+     * 学生得分
+     */
+    private Integer score;
+
+    /**
      * 学生答案
      */
     private String answer;

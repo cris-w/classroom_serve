@@ -1,8 +1,10 @@
 package top.criswjh.service;
 
+import java.util.List;
 import top.criswjh.entity.EduStudentExam;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.criswjh.entity.bo.edu.StudentPaperBo;
+import top.criswjh.entity.vo.exam.StudentExamVo;
 
 /**
 * @author wjh
@@ -18,4 +20,13 @@ public interface EduStudentExamService extends IService<EduStudentExam> {
      * @return true 操作成功 false 操作失败
      */
     Boolean savePaper(StudentPaperBo bo);
+
+    /**
+     * 通过试卷id 和 班级Id 获取学生考试记录
+     *
+     * @param paperId 试卷ID
+     * @param classId 班级ID
+     * @return list
+     */
+    List<StudentExamVo> listExamById(Long paperId, Long classId);
 }

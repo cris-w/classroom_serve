@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.Date;
 import lombok.Data;
 
 /**
@@ -31,7 +32,22 @@ public class EduStudentExam implements Serializable {
     private Long studentId;
 
     /**
-     * 状态：0未完成、1已完成
+     * 班级ID
+     */
+    private Long classId;
+
+    /**
+     * 批阅时间
+     */
+    private Date readTime;
+
+    /**
+     * 批阅人ID
+     */
+    private Long readId;
+
+    /**
+     * 状态：0未批阅、1已批阅
      */
     private Integer state;
 

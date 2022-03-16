@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import io.swagger.annotations.Api;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.criswjh.common.lang.AjaxResult;
 import top.criswjh.entity.EduExamPaper;
+import top.criswjh.entity.EduExamPublish;
 import top.criswjh.entity.bo.edu.ExamPublishBo;
 import top.criswjh.entity.bo.edu.PaperBo;
 import top.criswjh.entity.vo.exam.ExamPublishVo;
@@ -107,6 +109,21 @@ public class EduExamPaperController {
     }
 
     /**
+     * 通过试卷ID 获取该试卷已发放的班级IDs
+     *
+     * @param paperId
+     * @return
+     */
+    @GetMapping("/listClassIdsByPaperId/{paperId}")
+    public AjaxResult<List<Long>> listClassIdsByPaperId(@PathVariable Long paperId) {
+        List<EduExamPublish> list = eduExamPublishService.list(
+                new LambdaQueryWrapper<EduExamPublish>().eq(EduExamPublish::getPaperId, paperId));
+        List<Long> res = list.stream().map(EduExamPublish::getClassId)
+                .collect(Collectors.toList());
+        return AjaxResult.success(res);
+    }
+
+    /**
      * 获取发布试卷信息
      *
      * @param title
@@ -128,7 +145,7 @@ public class EduExamPaperController {
      */
     @GetMapping("/deletePublish/{id}")
     public AjaxResult<Void> deletePublish(@PathVariable Long id) {
-        // TODO 此处还需要删除学生考试记录
+        // TODO 此处应同步删除学生考试记录
         eduExamPublishService.removeById(id);
         return AjaxResult.success("删除成功");
     }

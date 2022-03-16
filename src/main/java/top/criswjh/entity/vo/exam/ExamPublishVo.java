@@ -31,6 +31,11 @@ public class ExamPublishVo {
     private String className;
 
     /**
+     * 班级ID
+     */
+    private Long classId;
+
+    /**
      * 限制时间：分钟
      */
     private Integer timeLimit;

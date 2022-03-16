@@ -9,11 +9,13 @@
     <result property="studentId" column="student_id" jdbcType="BIGINT"/>
     <result property="questionId" column="question_id" jdbcType="BIGINT"/>
     <result property="paperId" column="paper_id" jdbcType="BIGINT"/>
+    <result property="score" column="score" jdbcType="INTEGER"/>
+    <result property="totalScore" column="total_score" jdbcType="INTEGER"/>
     <result property="answer" column="answer" jdbcType="VARCHAR"/>
   </resultMap>
 
   <sql id="Base_Column_List">
-    id,student_id,question_id,paper_id
+    id,student_id,question_id,paper_id,score,total_score,
         answer
   </sql>
 </mapper>
