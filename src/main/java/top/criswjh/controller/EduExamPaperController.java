@@ -146,7 +146,7 @@ public class EduExamPaperController {
     @GetMapping("/deletePublish/{id}")
     public AjaxResult<Void> deletePublish(@PathVariable Long id) {
         // TODO 此处应同步删除学生考试记录
-        eduExamPublishService.removeById(id);
+        eduExamPublishService.removePaper(id);
         return AjaxResult.success("删除成功");
     }
 

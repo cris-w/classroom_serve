@@ -67,7 +67,7 @@ public class EduExamPaperServiceImpl extends ServiceImpl<EduExamPaperMapper, Edu
 
                 QuestionVo questionVo = questionBankService.getQuestionById(
                         question.getQuestionId());
-                choice.setId(question.getQuestionId());
+                choice.setId(questionVo.getId());
                 choice.setTitle(questionVo.getTitle());
                 choice.setAnswer(questionVo.getAnswer());
                 choice.setOptions(questionVo.getOptions());

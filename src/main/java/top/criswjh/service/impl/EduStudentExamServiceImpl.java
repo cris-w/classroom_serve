@@ -1,5 +1,6 @@
 package top.criswjh.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.List;
 import javax.annotation.Resource;
@@ -46,6 +47,19 @@ public class EduStudentExamServiceImpl extends ServiceImpl<EduStudentExamMapper,
     public List<StudentExamVo> listExamById(Long paperId, Long classId) {
 
         return eduStudentExamMapper.selectExamById(paperId, classId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean removeByPaperIdAndStudentId(Long paperId, Long studentId) {
+        // 删除考试试卷信息
+        boolean a = this.remove(new LambdaQueryWrapper<EduStudentExam>().eq(
+                EduStudentExam::getStudentId, studentId).eq(EduStudentExam::getPaperId, paperId));
+        // 删出考试题目信息
+        boolean b = eduStudentQuestionService.remove(
+                new LambdaQueryWrapper<EduStudentQuestion>().eq(EduStudentQuestion::getStudentId,
+                        studentId).eq(EduStudentQuestion::getPaperId, paperId));
+        return a && b;
     }
 }
 

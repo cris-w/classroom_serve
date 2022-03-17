@@ -29,4 +29,13 @@ public interface EduStudentExamService extends IService<EduStudentExam> {
      * @return list
      */
     List<StudentExamVo> listExamById(Long paperId, Long classId);
+
+    /**
+     * 通过试卷ID和学生ID删除相关考试记录
+     *
+     * @param paperId 试卷ID
+     * @param studentId 学生ID
+     * @return true 删除成功 false 删除失败
+     */
+    Boolean removeByPaperIdAndStudentId(Long paperId, Long studentId);
 }

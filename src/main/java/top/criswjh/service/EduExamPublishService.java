@@ -29,4 +29,12 @@ public interface EduExamPublishService extends IService<EduExamPublish> {
      * @return
      */
     List<ExamPublishVo> listPublishVo(String title, Long classId);
+
+    /**
+     * 通过id 删除发布试卷信息以及学生考试记录
+     *
+     * @param id id
+     * @return true
+     */
+    Boolean removePaper(Long id);
 }
