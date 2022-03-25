@@ -66,4 +66,13 @@ public interface EduCourseService extends IService<EduCourse> {
      * @return
      */
     List<CourseVo> listByClassId(Long classId);
+
+
+    /**
+     * 更新课程人数
+     *
+     * @param classId 班级id
+     * @return i
+     */
+    boolean updateCourseCount(Long classId);
 }

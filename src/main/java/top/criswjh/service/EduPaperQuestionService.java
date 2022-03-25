@@ -3,6 +3,7 @@ package top.criswjh.service;
 import java.util.List;
 import top.criswjh.entity.EduPaperQuestion;
 import com.baomidou.mybatisplus.extension.service.IService;
+import top.criswjh.entity.vo.exam.QuestionBriefVo;
 
 /**
 * @author wjh
@@ -19,4 +20,11 @@ public interface EduPaperQuestionService extends IService<EduPaperQuestion> {
      */
     Integer removeByPaperIds(List<Long> ids);
 
+    /**
+     * 通过试卷ID 获取题目信息。 (修改试卷的回显)
+     *
+     * @param paperId 试卷ID
+     * @return list
+     */
+    List<QuestionBriefVo> listQuestionBriefVoById(Long paperId);
 }

@@ -1,5 +1,6 @@
 package top.criswjh.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,5 +63,14 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
             userList.add(vo);
         });
         return userList;
+    }
+
+    @Override
+    public boolean defaultRole(Long id) {
+        SysUserRole sysUserRole = new SysUserRole();
+        sysUserRole.setUserId(id);
+        // TODO 此处角色id有些许问题
+        sysUserRole.setRoleId(3L);
+        return sysUserRoleMapper.insert(sysUserRole) > 0;
     }
 }

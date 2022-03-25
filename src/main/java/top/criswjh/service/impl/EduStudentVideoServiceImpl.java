@@ -1,6 +1,8 @@
 package top.criswjh.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import top.criswjh.entity.EduStudentVideo;
@@ -34,7 +36,16 @@ public class EduStudentVideoServiceImpl extends ServiceImpl<EduStudentVideoMappe
         if (exist > 0) {
             return false;
         }
+        studentVideo.setWatchTime(new Date());
         return studentVideoMapper.insert(studentVideo) > 0;
+    }
+
+    @Override
+    public List<EduStudentVideo> getVideoView(String today, String last) {
+        List<EduStudentVideo> list = studentVideoMapper.selectList(
+                new LambdaQueryWrapper<EduStudentVideo>().between(EduStudentVideo::getWatchTime,
+                        last, today));
+        return list;
     }
 }
 

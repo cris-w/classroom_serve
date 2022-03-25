@@ -9,11 +9,12 @@
     <result property="studentId" column="student_id" jdbcType="BIGINT"/>
     <result property="videoId" column="video_id" jdbcType="BIGINT"/>
     <result property="courseId" column="course_id" jdbcType="BIGINT"/>
+    <result property="watchTime" column="watch_time" jdbcType="DATE"/>
   </resultMap>
 
   <sql id="Base_Column_List">
     id,student_id,video_id,
-        course_id
+        course_id,watch_time
   </sql>
   <select id="selectStudentVideoList" resultType="java.lang.Long">
     select video_id

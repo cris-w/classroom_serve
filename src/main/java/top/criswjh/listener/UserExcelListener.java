@@ -96,5 +96,6 @@ public class UserExcelListener extends AnalysisEventListener<UserDto> {
 
     private void saveData() {
         sysUserService.saveBatch(list, BATCH_COUNT);
+        sysUserService.defaultRole(list);
     }
 }

@@ -5,11 +5,15 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import javax.annotation.Resource;
 import top.criswjh.entity.EduPaperQuestion;
+import top.criswjh.entity.EduQuestionBank;
+import top.criswjh.entity.vo.exam.QuestionBriefVo;
 import top.criswjh.service.EduPaperQuestionService;
 import top.criswjh.mapper.EduPaperQuestionMapper;
 import org.springframework.stereotype.Service;
+import top.criswjh.service.EduQuestionBankService;
 
 /**
  * @author wjh
@@ -23,6 +27,8 @@ public class EduPaperQuestionServiceImpl extends
 
     @Resource
     private EduPaperQuestionMapper paperQuestionMapper;
+    @Resource
+    private EduQuestionBankService eduQuestionBankService;
 
     @Override
     public Integer removeByPaperIds(List<Long> ids) {
@@ -35,6 +41,26 @@ public class EduPaperQuestionServiceImpl extends
                     .eq(EduPaperQuestion::getPaperId, id)));
         });
         return nums.get();
+    }
+
+    @Override
+    public List<QuestionBriefVo> listQuestionBriefVoById(Long paperId) {
+        List<EduPaperQuestion> list = this.list(
+                new LambdaQueryWrapper<EduPaperQuestion>().eq(EduPaperQuestion::getPaperId,
+                        paperId));
+        List<QuestionBriefVo> vos = list.stream().map(l -> {
+                    QuestionBriefVo vo = new QuestionBriefVo();
+                    vo.setId(l.getQuestionId());
+                    vo.setScore(l.getScore());
+                    return vo;
+                })
+                .collect(Collectors.toList());
+        vos.forEach(vo -> {
+            EduQuestionBank question = eduQuestionBankService.getById(vo.getId());
+            vo.setTitle(question.getTitle());
+            vo.setType(question.getType());
+        });
+        return vos;
     }
 }
 

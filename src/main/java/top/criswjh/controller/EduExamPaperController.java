@@ -20,6 +20,7 @@ import top.criswjh.entity.bo.edu.ExamPublishBo;
 import top.criswjh.entity.bo.edu.PaperBo;
 import top.criswjh.entity.vo.exam.ExamPublishVo;
 import top.criswjh.entity.vo.exam.PaperVo;
+import top.criswjh.entity.vo.exam.QuestionBriefVo;
 import top.criswjh.service.EduExamPaperService;
 import top.criswjh.service.EduExamPublishService;
 import top.criswjh.service.EduPaperQuestionService;
@@ -78,6 +79,18 @@ public class EduExamPaperController {
     }
 
     /**
+     * 修改试卷
+     *
+     * @param paperBo paper
+     * @return ok
+     */
+    @PostMapping("/update")
+    public AjaxResult<Void> update(@RequestBody PaperBo paperBo) {
+        examPaperService.updatePaper(paperBo);
+        return AjaxResult.success("更新成功");
+    }
+
+    /**
      * 通过ids批量删除
      *
      * @param ids ids
@@ -106,6 +119,19 @@ public class EduExamPaperController {
             return AjaxResult.success("发布成功");
         }
         return AjaxResult.error("发布失败");
+    }
+
+    /**
+     * 通过试卷ID 获取题目信息。 (修改试卷的回显)
+     *
+     * @param paperId
+     * @return
+     */
+    @GetMapping("/listPaperQuestionByPaperId/{paperId}")
+    public AjaxResult<List<QuestionBriefVo>> listPaperQuestionByPaperId(
+            @PathVariable Long paperId) {
+        List<QuestionBriefVo> list = paperQuestionService.listQuestionBriefVoById(paperId);
+        return AjaxResult.success(list);
     }
 
     /**
@@ -145,7 +171,6 @@ public class EduExamPaperController {
      */
     @GetMapping("/deletePublish/{id}")
     public AjaxResult<Void> deletePublish(@PathVariable Long id) {
-        // TODO 此处应同步删除学生考试记录
         eduExamPublishService.removePaper(id);
         return AjaxResult.success("删除成功");
     }

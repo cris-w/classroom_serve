@@ -1,6 +1,7 @@
 package top.criswjh.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import java.util.List;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.multipart.MultipartFile;
 import top.criswjh.entity.SysUser;
@@ -63,4 +64,12 @@ public interface SysUserService extends IService<SysUser> {
      * @return true 添加成功， false 添加失败
      */
     boolean savaUserBatch(MultipartFile file, SysUserService sysUserService);
+
+    /**
+     * 默认角色 normal
+     *
+     * @param list
+     * @return
+     */
+    boolean defaultRole(List<SysUser> list);
 }

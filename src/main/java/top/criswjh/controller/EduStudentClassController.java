@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.criswjh.common.lang.AjaxResult;
 import top.criswjh.entity.EduStudentClass;
+import top.criswjh.service.EduCourseService;
 import top.criswjh.service.EduStudentClassService;
 
 /**
@@ -22,6 +23,8 @@ public class EduStudentClassController {
 
     @Resource
     private EduStudentClassService studentClassService;
+    @Resource
+    private EduCourseService eduCourseService;
 
     /**
      * 通过学生id查询加入班级id
@@ -49,7 +52,10 @@ public class EduStudentClassController {
      */
     @PostMapping("/joinClass")
     public AjaxResult<Void> joinClass(@RequestBody EduStudentClass studentClass) {
+        // 加入班级
         studentClassService.save(studentClass);
+        // 更新课程人数
+        eduCourseService.updateCourseCount(studentClass.getClassId());
         return AjaxResult.success("加入成功");
     }
 }

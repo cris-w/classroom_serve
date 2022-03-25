@@ -51,4 +51,9 @@ public class StudentExamVo {
      * 考试成绩
      */
     private Integer score;
+
+    /**
+     * 总分
+     */
+    private Integer totalScore;
 }

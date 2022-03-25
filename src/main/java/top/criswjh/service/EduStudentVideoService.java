@@ -29,4 +29,12 @@ public interface EduStudentVideoService extends IService<EduStudentVideo> {
      */
     boolean saveWhenNotExist(EduStudentVideo studentVideo);
 
+    /**
+     * 获取最近一周学生观看视频情况
+     *
+     * @param today 今天
+     * @param last 一周前
+     * @return list
+     */
+    List<EduStudentVideo> getVideoView(String today, String last);
 }

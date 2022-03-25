@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.util.Date;
 import lombok.Data;
 
 /**
@@ -35,6 +36,11 @@ public class EduStudentVideo implements Serializable {
      * 课程ID
      */
     private Long courseId;
+
+    /**
+     * 观看时间
+     */
+    private Date watchTime;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

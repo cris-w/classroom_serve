@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.annotation.Resource;
@@ -111,6 +112,32 @@ public class EduExamPaperServiceImpl extends ServiceImpl<EduExamPaperMapper, Edu
                 EduPaperQuestion eduPaperQuestion = new EduPaperQuestion();
                 BeanUtils.copyProperties(question, eduPaperQuestion);
                 eduPaperQuestion.setPaperId(id);
+                return eduPaperQuestion;
+            }).collect(Collectors.toCollection(ArrayList<EduPaperQuestion>::new));
+            paperQuestionService.saveBatch(list);
+        }
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updatePaper(PaperBo paperBo) {
+        // 1. 更新试卷信息
+        EduExamPaper paper = new EduExamPaper();
+        BeanUtils.copyProperties(paperBo, paper);
+        paper.setGmtUpdate(new Date());
+        this.updateById(paper);
+        // 2. 先删除试卷的题目
+        paperQuestionService.remove(
+                new LambdaQueryWrapper<EduPaperQuestion>().eq(EduPaperQuestion::getPaperId,
+                        paperBo.getId()));
+        // 3. 重新插入题目信息
+        List<PaperQuestion> questionList = paperBo.getQuestionList();
+        if (questionList != null && questionList.size() > 0) {
+            // 如果问题列表不为空，则转化为 EduPaperQuestion,并插入
+            List<EduPaperQuestion> list = questionList.stream().map(question -> {
+                EduPaperQuestion eduPaperQuestion = new EduPaperQuestion();
+                BeanUtils.copyProperties(question, eduPaperQuestion);
+                eduPaperQuestion.setPaperId(paperBo.getId());
                 return eduPaperQuestion;
             }).collect(Collectors.toCollection(ArrayList<EduPaperQuestion>::new));
             paperQuestionService.saveBatch(list);

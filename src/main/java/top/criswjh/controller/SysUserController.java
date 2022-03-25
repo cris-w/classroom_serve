@@ -44,6 +44,29 @@ public class SysUserController extends BaseController {
     @Resource
     private BCryptPasswordEncoder passwordEncoder;
 
+    @PostMapping("/register")
+    public AjaxResult<Void> register(@Validated @RequestBody SysUser user) {
+        if (sysUserService.nameExist(user.getUsername())) {
+            return AjaxResult.error("用户名已存在");
+        }
+
+        user.setCreated(DateUtil.date());
+        user.setStatu(Const.STATUS_ON);
+
+        // 默认密码 123456
+        String pwd = passwordEncoder.encode(user.getPassword());
+        user.setPassword(pwd);
+
+        // 默认头像
+        user.setAvatar(Const.DEFAULT_AVATAR);
+
+        sysUserService.save(user);
+        // 设置默认角色
+        sysUserRoleService.defaultRole(user.getId());
+
+        return AjaxResult.success("注册成功");
+    }
+
     /**
      * 通过id获取用户信息，并将用户角色信息注入
      *

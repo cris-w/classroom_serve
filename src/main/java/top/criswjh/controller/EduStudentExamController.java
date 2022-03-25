@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.criswjh.common.lang.AjaxResult;
+import top.criswjh.entity.EduExamPaper;
 import top.criswjh.entity.EduStudentExam;
 import top.criswjh.entity.EduStudentQuestion;
 import top.criswjh.entity.bo.edu.StudentPaperBo;
 import top.criswjh.entity.vo.exam.StudentExamVo;
+import top.criswjh.service.EduExamPaperService;
 import top.criswjh.service.EduStudentExamService;
 import top.criswjh.service.EduStudentQuestionService;
 
@@ -30,6 +32,8 @@ public class EduStudentExamController {
     private EduStudentExamService studentExamService;
     @Resource
     private EduStudentQuestionService eduStudentQuestionService;
+    @Resource
+    private EduExamPaperService examPaperService;
 
     /**
      * 获取所有学生考试列表
@@ -79,7 +83,9 @@ public class EduStudentExamController {
     @GetMapping("/listExamById/{paperId}/{classId}")
     public AjaxResult<List<StudentExamVo>> listExamById(@PathVariable("paperId") Long paperId,
             @PathVariable("classId") Long classId) {
+        Integer totalScore = examPaperService.getById(paperId).getTotalScore();
         List<StudentExamVo> list = studentExamService.listExamById(paperId, classId);
+        list.forEach(l -> l.setTotalScore(totalScore));
         return AjaxResult.success(list);
     }
 

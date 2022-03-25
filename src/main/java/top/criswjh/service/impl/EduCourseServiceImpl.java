@@ -124,6 +124,14 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
         return eduCourseMapper.getCourseByClassId(classId);
     }
+
+    @Override
+    public boolean updateCourseCount(Long classId) {
+        List<EduCourse> list = this.list(
+                new LambdaQueryWrapper<EduCourse>().eq(EduCourse::getClassId, classId));
+        list.forEach(l -> l.setJoinCount(l.getJoinCount() + 1));
+        return this.updateBatchById(list, list.size());
+    }
 }
 
 

@@ -26,4 +26,10 @@ public interface EduExamPaperService extends IService<EduExamPaper> {
     void createPaper(PaperBo paperBo);
 
 
+    /**
+     * 更新试卷题目
+     *
+     * @param paperBo bo
+     */
+    void updatePaper(PaperBo paperBo);
 }

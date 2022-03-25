@@ -38,4 +38,11 @@ public interface SysUserRoleService extends IService<SysUserRole> {
      */
     List<TeacherVo> listHotUser(String name);
 
+    /**
+     * 分配默认角色
+     *
+     * @param id 用户id
+     * @return ok
+     */
+    boolean defaultRole(Long id);
 }

@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/login",
             "/logout",
             "/auth/captcha",
+            "/sys/user/register"
     };
 
     /**

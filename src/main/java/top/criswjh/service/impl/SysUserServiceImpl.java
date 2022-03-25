@@ -17,6 +17,7 @@ import top.criswjh.common.redis.RedisCache;
 import top.criswjh.entity.SysMenu;
 import top.criswjh.entity.SysRole;
 import top.criswjh.entity.SysUser;
+import top.criswjh.entity.SysUserRole;
 import top.criswjh.entity.dto.UserDto;
 import top.criswjh.listener.UserExcelListener;
 import top.criswjh.mapper.SysRoleMapper;
@@ -24,6 +25,7 @@ import top.criswjh.mapper.SysRoleMenuMapper;
 import top.criswjh.mapper.SysUserMapper;
 import top.criswjh.mapper.SysUserRoleMapper;
 import top.criswjh.service.SysMenuService;
+import top.criswjh.service.SysUserRoleService;
 import top.criswjh.service.SysUserService;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
     private SysMenuService menuService;
     @Resource
     private SysUserRoleMapper userRoleMapper;
+    @Resource
+    private SysUserRoleService sysUserRoleService;
     @Resource
     private SysRoleMenuMapper roleMenuMapper;
     @Resource
@@ -131,5 +135,16 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser>
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean defaultRole(List<SysUser> list) {
+        List<SysUserRole> collect = list.stream().map(l -> {
+            SysUserRole sysUserRole = new SysUserRole();
+            sysUserRole.setUserId(l.getId());
+            sysUserRole.setRoleId(3L);
+            return sysUserRole;
+        }).collect(Collectors.toList());
+        return sysUserRoleService.saveBatch(collect);
     }
 }

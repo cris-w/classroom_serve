@@ -33,16 +33,12 @@ import top.criswjh.entity.SysUser;
 public class AuthController extends BaseController {
 
     @Resource
-    Producer producer;
+    private Producer producer;
 
     @GetMapping("/captcha")
     public AjaxResult<Map<Object, Object>> captcha() throws IOException {
         String key = IdUtil.objectId();
         String code = producer.createText();
-
-        // 用于测试
-//        key = "123";
-//        code = "123";
 
         BufferedImage image = producer.createImage(code);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
