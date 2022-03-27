@@ -122,6 +122,22 @@ public class EduExamPaperController {
     }
 
     /**
+     * 通过班级id 和试卷id 获取考试限制时间
+     *
+     * @param paperId 试卷id
+     * @param classId 班级id
+     * @return min
+     */
+    @GetMapping("getTimeLimit/{paperId}/{classId}")
+    public AjaxResult<Integer> getTimeLimit(@PathVariable("paperId") Long paperId,
+            @PathVariable("classId") Long classId) {
+        EduExamPublish one = eduExamPublishService.getOne(
+                new LambdaQueryWrapper<EduExamPublish>().eq(EduExamPublish::getPaperId, paperId)
+                        .eq(EduExamPublish::getClassId, classId), true);
+        return AjaxResult.success(one.getTimeLimit());
+    }
+
+    /**
      * 通过试卷ID 获取题目信息。 (修改试卷的回显)
      *
      * @param paperId
